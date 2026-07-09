@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umbrella Dynamics — Never miss a real customer again</title>
+<meta name="description" content="An AI voice agent that answers, screens, and forwards your business calls. Spam blocked. Real customers reach you every time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:      #21c063;
+    --green-dark: #17a552;
+    --teal:       #0b5c4d;
+    --teal-deep:  #063f35;
+
+    --bg:         #eef1ee;   /* light grey page background */
+    --surface:    #ffffff;   /* cards, nav, phone */
+    --mist:       #e5ece7;   /* tinted section bands */
+    --cloud:      #f4f7f5;
+    --line:       #d9e2dc;
+    --ink:        #202b27;
+    --ink-soft:   #57665f;
+
+    --nav-bg:     rgba(255,255,255,.82);
+    --bub-caller: #dcf5e7;
+    --chip-bad-bg:#fbe9e6;  --chip-bad-fg:#b3402f;
+    --shadow-lg:  0 24px 60px rgba(6,63,53,.12);
+    --shadow-phone: 0 30px 70px rgba(6,63,53,.16);
+
+    --radius: 20px;
+    --disp: "Bricolage Grotesque", sans-serif;
+    --body: "Instrument Sans", -apple-system, sans-serif;
+    --mono: "Spline Sans Mono", monospace;
+  }
+  [data-theme="dark"]{
+    --bg:         #0d1412;
+    --surface:    #17211d;
+    --mist:       #121b17;
+    --cloud:      #141e1a;
+    --line:       #27352f;
+    --ink:        #e7eee9;
+    --ink-soft:   #92a49b;
+
+    --nav-bg:     rgba(13,20,18,.82);
+    --bub-caller: #1e3d2c;
+    --chip-bad-bg:#3a201c;  --chip-bad-fg:#f0a094;
+    --shadow-lg:  0 24px 60px rgba(0,0,0,.45);
+    --shadow-phone: 0 30px 70px rgba(0,0,0,.55);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    transition:background .3s ease, color .3s ease;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  h1,h2,h3{font-family:var(--disp);line-height:1.08;letter-spacing:-0.01em}
+  h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700}
+  .eyebrow{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal);
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+  }
+  [data-theme="dark"] .eyebrow{color:#6fd9a4}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--green);border-radius:2px}
+  .sub{color:var(--ink-soft);font-size:1.08rem;max-width:560px}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--body);font-weight:600;font-size:1rem;
+    padding:15px 30px;border-radius:999px;border:none;cursor:pointer;
+    text-decoration:none;transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-green{
+    background:var(--green);color:#fff;
+    box-shadow:0 8px 24px rgba(33,192,99,.32);
+  }
+  .btn-green:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 30px rgba(33,192,99,.4)}
+  .btn-ghost{background:transparent;color:var(--teal);border:1.5px solid var(--line)}
+  [data-theme="dark"] .btn-ghost{color:#6fd9a4}
+  .btn-ghost:hover{border-color:var(--green);transform:translateY(-2px)}
+  .btn:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--nav-bg);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;flex:none}
+  .logo-mark{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    background:linear-gradient(135deg,var(--green) 0%,var(--teal) 100%);
+    display:grid;place-items:center;color:#fff;
+  }
+  .nav-links{display:flex;gap:24px;align-items:center}
+  .nav-links > a{color:var(--ink-soft);text-decoration:none;font-size:.95rem;font-weight:500;transition:color .15s}
+  .nav-links > a:hover{color:var(--teal)}
+  [data-theme="dark"] .nav-links > a:hover{color:#6fd9a4}
+  .nav-cta{padding:10px 22px;font-size:.92rem}
+  .nav-tools{display:flex;align-items:center;gap:8px}
+  .tool-btn{
+    height:38px;border-radius:999px;border:1.5px solid var(--line);
+    background:var(--surface);color:var(--ink);cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;padding:0 12px;
+    font-family:var(--body);font-size:.85rem;font-weight:500;
+    transition:border-color .15s, transform .15s;
+  }
+  .tool-btn:hover{border-color:var(--green);transform:translateY(-1px)}
+  .tool-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+  .lang-wrap{position:relative}
+  .lang-select{
+    appearance:none;-webkit-appearance:none;
+    height:38px;border-radius:999px;border:1.5px solid var(--line);
+    background:var(--surface);color:var(--ink);cursor:pointer;
+    padding:0 28px 0 34px;font-family:var(--body);font-size:.85rem;font-weight:500;
+    transition:border-color .15s;
+  }
+  .lang-select:hover{border-color:var(--green)}
+  .lang-select:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+  .lang-wrap::before{
+    content:"";position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;pointer-events:none;
+    background:currentColor;color:var(--ink-soft);
+    -webkit-mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>') center/contain no-repeat;
+    mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>') center/contain no-repeat;
+  }
+  .lang-wrap::after{
+    content:"";position:absolute;right:11px;top:50%;transform:translateY(-40%) rotate(45deg);
+    width:7px;height:7px;border-right:1.5px solid var(--ink-soft);border-bottom:1.5px solid var(--ink-soft);
+    pointer-events:none;
+  }
+  @media(max-width:840px){
+    .nav-links a:not(.btn){display:none}
+    .logo span.logo-name{display:none}
+  }
+  @media(max-width:520px){.nav-cta{display:none !important}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 72px;position:relative;
+    background:
+      radial-gradient(ellipse 640px 420px at 88% -10%, rgba(33,192,99,.14), transparent 60%),
+      radial-gradient(ellipse 520px 380px at -8% 30%, rgba(11,92,77,.09), transparent 60%);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .hero h1{font-size:clamp(2.5rem,5.6vw,4rem);font-weight:800;margin-bottom:20px}
+  .hero h1 em{
+    font-style:normal;color:var(--teal);
+    background:linear-gradient(transparent 62%, rgba(33,192,99,.28) 62%);
+    padding:0 .06em;
+  }
+  [data-theme="dark"] .hero h1 em{color:#6fd9a4}
+  .hero .sub{margin-bottom:32px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+  .trust-row{display:flex;gap:22px;flex-wrap:wrap;color:var(--ink-soft);font-size:.88rem}
+  .trust-row span{display:flex;align-items:center;gap:7px}
+  .trust-row svg{flex:none}
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:44px}
+    .hero{padding:64px 0 56px}
+  }
+
+  /* ---------- hero ticker card ---------- */
+  .ticker-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:24px;
+    box-shadow:var(--shadow-lg);padding:26px;
+    max-width:420px;margin-left:auto;
+  }
+  .ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .ticker-head .label{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .live-dot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.74rem;color:var(--teal)}
+  [data-theme="dark"] .live-dot{color:#6fd9a4}
+  .live-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(33,192,99,.5)}50%{box-shadow:0 0 0 7px rgba(33,192,99,0)}}
+  .call-row{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:14px;animation:rowIn .5s ease both}
+  .call-row + .call-row{border-top:1px dashed var(--line)}
+  .call-row:nth-child(2){animation-delay:.25s}.call-row:nth-child(3){animation-delay:.5s}.call-row:nth-child(4){animation-delay:.75s}
+  @keyframes rowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .call-ava{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:1.1rem}
+  .call-info{flex:1;min-width:0}
+  .call-info b{display:block;font-size:.94rem;font-weight:600}
+  .call-info small{color:var(--ink-soft);font-size:.8rem}
+  .chip{font-family:var(--mono);font-size:.68rem;padding:5px 11px;border-radius:999px;white-space:nowrap}
+  .chip-fwd{background:rgba(33,192,99,.15);color:#137a42}
+  [data-theme="dark"] .chip-fwd{color:#6fd9a4}
+  .chip-block{background:var(--chip-bad-bg);color:var(--chip-bad-fg)}
+  .chip-msg{background:var(--mist);color:var(--teal)}
+  [data-theme="dark"] .chip-msg{color:#8fc7b6}
+  .ava-good{background:rgba(33,192,99,.16)}
+  .ava-bad{background:var(--chip-bad-bg)}
+  .ticker-foot{
+    margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:.85rem;color:var(--ink-soft);display:flex;justify-content:space-between;
+  }
+  .ticker-foot b{color:var(--teal);font-family:var(--mono);font-weight:500}
+  [data-theme="dark"] .ticker-foot b{color:#6fd9a4}
+  @media(max-width:900px){.ticker-card{margin:0 auto}}
+
+  /* ---------- demo ---------- */
+  .demo{background:linear-gradient(180deg,var(--mist) 0%,var(--cloud) 100%);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .demo-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+  @media(max-width:900px){.demo-grid{grid-template-columns:1fr;gap:40px}}
+  .scenario-tabs{display:flex;gap:10px;margin:26px 0 8px}
+  .tab{
+    flex:none;padding:10px 20px;border-radius:999px;border:1.5px solid var(--line);
+    background:var(--surface);font-family:var(--body);font-weight:600;font-size:.9rem;color:var(--ink-soft);
+    cursor:pointer;transition:all .18s;
+  }
+  .tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+  .demo-note{font-size:.85rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;margin-top:14px}
+  .demo-note svg{flex:none}
+
+  .phone{
+    width:min(360px,100%);margin:0 auto;background:var(--surface);
+    border-radius:38px;border:1px solid var(--line);
+    box-shadow:var(--shadow-phone), inset 0 0 0 7px #10201b;
+    overflow:hidden;
+  }
+  .phone-top{background:var(--teal);color:#fff;padding:22px 20px 16px;display:flex;align-items:center;gap:12px}
+  .agent-ava{width:44px;height:44px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--green),#7be0a8);display:grid;place-items:center}
+  .phone-top b{display:block;font-size:.98rem;font-weight:600}
+  .phone-status{font-family:var(--mono);font-size:.72rem;opacity:.85}
+  .phone-body{
+    height:340px;overflow-y:auto;padding:18px 16px;
+    background:radial-gradient(circle at 20% 20%, rgba(33,192,99,.06), transparent 45%), var(--mist);
+    display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;
+  }
+  .bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.88rem;line-height:1.45;animation:bubIn .3s ease both}
+  @keyframes bubIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+  .bub-agent{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
+  .bub-caller{background:var(--bub-caller);border-bottom-right-radius:5px;align-self:flex-end}
+  .bub-sys{
+    align-self:center;background:transparent;border:1px dashed var(--line);
+    font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);padding:6px 14px;border-radius:999px;text-align:center;
+  }
+  .bub-sys.good{border-color:rgba(33,192,99,.5);color:#137a42;background:rgba(33,192,99,.08)}
+  [data-theme="dark"] .bub-sys.good{color:#6fd9a4}
+  .bub-sys.bad{border-color:var(--chip-bad-fg);color:var(--chip-bad-fg);background:var(--chip-bad-bg)}
+  .bub-who{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:3px}
+  .phone-dock{padding:16px;border-top:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:14px}
+  .play-btn{
+    width:56px;height:56px;border-radius:50%;border:none;flex:none;cursor:pointer;
+    background:var(--green);color:#fff;display:grid;place-items:center;
+    box-shadow:0 8px 22px rgba(33,192,99,.4);transition:transform .15s, background .15s;
+  }
+  .play-btn:hover{transform:scale(1.06);background:var(--green-dark)}
+  .play-btn:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  .wave{display:flex;align-items:center;gap:3px;height:40px;flex:1}
+  .wave i{width:4px;border-radius:3px;background:var(--line);height:30%;transition:background .3s}
+  .wave.on i{background:var(--green);animation:wob 1s ease-in-out infinite}
+  .wave i:nth-child(3n){animation-delay:.12s}.wave i:nth-child(3n+1){animation-delay:.26s}
+  .wave i:nth-child(4n){animation-delay:.34s}.wave i:nth-child(5n){animation-delay:.08s}
+  @keyframes wob{0%,100%{height:22%}50%{height:92%}}
+  .dock-time{font-family:var(--mono);font-size:.76rem;color:var(--ink-soft);min-width:42px;text-align:right}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  @media(max-width:820px){.steps{grid-template-columns:1fr}}
+  .step{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:32px 28px;position:relative;transition:transform .2s, box-shadow .2s;
+  }
+  .step:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(6,63,53,.1)}
+  [data-theme="dark"] .step:hover{box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .step-ico{width:52px;height:52px;border-radius:15px;background:var(--mist);display:grid;place-items:center;margin-bottom:20px;color:var(--teal)}
+  [data-theme="dark"] .step-ico{color:#6fd9a4}
+  .step h3{font-size:1.22rem;font-weight:700;margin-bottom:10px}
+  .step p{color:var(--ink-soft);font-size:.95rem}
+  .step-tag{position:absolute;top:28px;right:26px;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);letter-spacing:.1em}
+
+  /* ---------- benefits ---------- */
+  .benefits{background:var(--teal-deep);color:#fff}
+  .benefits .eyebrow{color:#8fe6bb}
+  .benefits h2{color:#fff}
+  .bene-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  @media(max-width:820px){.bene-grid{grid-template-columns:1fr}}
+  .bene{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:32px 28px}
+  .bene-stat{font-family:var(--disp);font-size:2.4rem;font-weight:800;color:var(--green);line-height:1;margin-bottom:6px}
+  .bene-stat small{font-size:1rem;font-weight:600;color:#8fe6bb}
+  .bene h3{font-size:1.15rem;margin:14px 0 8px;color:#fff}
+  .bene p{color:rgba(255,255,255,.65);font-size:.93rem}
+
+  /* ---------- testimonials ---------- */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  @media(max-width:820px){.quotes{grid-template-columns:1fr}}
+  .quote{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;display:flex;flex-direction:column;gap:18px}
+  .stars{color:var(--green);letter-spacing:3px;font-size:.9rem}
+  .quote p{font-size:.97rem;color:var(--ink)}
+  .quote-who{display:flex;align-items:center;gap:12px;margin-top:auto}
+  .quote-ava{width:42px;height:42px;border-radius:50%;flex:none;font-weight:600;color:#fff;display:grid;place-items:center;font-size:.9rem}
+  .quote-who b{display:block;font-size:.9rem}
+  .quote-who small{color:var(--ink-soft);font-size:.8rem}
+
+  /* ---------- pricing ---------- */
+  .pricing{background:var(--mist);border-top:1px solid var(--line)}
+  .price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,420px));gap:24px;justify-content:center;margin-top:52px}
+  @media(max-width:820px){.price-grid{grid-template-columns:1fr}}
+  .plan{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:38px 34px;display:flex;flex-direction:column;position:relative}
+  .plan.hot{border:2px solid var(--green);box-shadow:0 22px 55px rgba(33,192,99,.16)}
+  .hot-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:.72rem;font-weight:600;padding:5px 16px;border-radius:999px;letter-spacing:.05em}
+  .plan h3{font-size:1.25rem;margin-bottom:4px}
+  .plan .for{color:var(--ink-soft);font-size:.88rem;margin-bottom:22px}
+  .price{font-family:var(--disp);font-size:2.9rem;font-weight:800;line-height:1}
+  .price small{font-size:1rem;font-weight:500;color:var(--ink-soft);font-family:var(--body)}
+  .plan ul{list-style:none;margin:26px 0 30px;display:flex;flex-direction:column;gap:12px}
+  .plan li{display:flex;gap:11px;font-size:.94rem;color:var(--ink-soft);align-items:flex-start}
+  .plan li svg{flex:none;margin-top:3px}
+  .plan .btn{margin-top:auto;justify-content:center}
+
+  /* ---------- closer ---------- */
+  .closer{
+    background:radial-gradient(ellipse 700px 400px at 50% 120%, rgba(33,192,99,.25), transparent 65%), var(--teal);
+    color:#fff;text-align:center;padding:110px 0;
+  }
+  .closer h2{color:#fff;font-size:clamp(2rem,4.6vw,3.1rem);max-width:640px;margin:0 auto 18px}
+  .closer p{color:rgba(255,255,255,.72);max-width:460px;margin:0 auto 36px}
+  .closer .fine{font-size:.83rem;color:rgba(255,255,255,.5);margin-top:20px}
+
+  footer{background:var(--teal-deep);color:rgba(255,255,255,.55);padding:34px 0;font-size:.85rem}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  footer a{color:rgba(255,255,255,.75);text-decoration:none}
+  footer a:hover{color:#fff}
+
+  .rev{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease}
+  .rev.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+    .rev{opacity:1;transform:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top">
+      <span class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8Z" fill="#fff"/><path d="M12 11v7a2.5 2.5 0 0 0 5 0" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      </span>
+      <span class="logo-name">Umbrella Dynamics</span>
+    </a>
+    <div class="nav-links">
+      <a href="#demo" data-i18n="navDemo">Hear it live</a>
+      <a href="#how" data-i18n="navHow">How it works</a>
+      <a href="#pricing" data-i18n="navPricing">Pricing</a>
+    </div>
+    <div class="nav-tools">
+      <span class="lang-wrap">
+        <select class="lang-select" id="langSelect" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
+      </span>
+      <button class="tool-btn" id="themeBtn" aria-label="Toggle light and dark theme">
+        <svg id="icoSun" width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg id="icoMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M20 13.5A8.5 8.5 0 0 1 10.5 4 8.5 8.5 0 1 0 20 13.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="#pricing" class="btn btn-green nav-cta" data-i18n="navCta">Start free trial</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow" data-i18n="heroEyebrow">AI call screening for small business</span>
+      <h1 data-i18n="heroH1">Never miss a <em>real customer</em> again.</h1>
+      <p class="sub" data-i18n="heroSub">Your Umbrella agent answers every call, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — delivered through WhatsApp, so it works with the phone already in your pocket.</p>
+      <div class="hero-ctas">
+        <a href="#pricing" class="btn btn-green"><span data-i18n="ctaTrial">Start your free trial</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#demo" class="btn btn-ghost">▶&nbsp; <span data-i18n="ctaHear">Hear a live call</span></a>
+      </div>
+      <div class="trust-row">
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="trust1">No new number needed</span></span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="trust2">Set up in 10 minutes</span></span>
+        <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="trust3">Cancel anytime</span></span>
+      </div>
+    </div>
+
+    <aside class="ticker-card" aria-label="Example of today's screened calls">
+      <div class="ticker-head">
+        <span class="label" data-i18n="tickerLabel">Today's calls</span>
+        <span class="live-dot" data-i18n="tickerLive">agent on duty</span>
+      </div>
+      <div class="call-row">
+        <div class="call-ava ava-good">📞</div>
+        <div class="call-info"><b data-i18n="t1b">Sarah M. — new quote</b><small data-i18n="t1s">"Need my gutters looked at this week"</small></div>
+        <span class="chip chip-fwd" data-i18n="chipFwd">forwarded</span>
+      </div>
+      <div class="call-row">
+        <div class="call-ava ava-bad">🤖</div>
+        <div class="call-info"><b data-i18n="t2b">Unknown — robocall</b><small data-i18n="t2s">Auto-warranty recording detected</small></div>
+        <span class="chip chip-block" data-i18n="chipBlock">blocked</span>
+      </div>
+      <div class="call-row">
+        <div class="call-ava ava-good">📞</div>
+        <div class="call-info"><b data-i18n="t3b">Miguel R. — returning</b><small data-i18n="t3s">"Following up on Tuesday's invoice"</small></div>
+        <span class="chip chip-fwd" data-i18n="chipFwd2">forwarded</span>
+      </div>
+      <div class="call-row">
+        <div class="call-ava ava-bad">📵</div>
+        <div class="call-info"><b data-i18n="t4b">Unknown — telemarketer</b><small data-i18n="t4s">Bulk SEO sales pitch</small></div>
+        <span class="chip chip-msg" data-i18n="chipMsg">took message</span>
+      </div>
+      <div class="ticker-foot">
+        <span data-i18n="tickerFoot">Time saved today</span><b>47 min</b>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<!-- ============ DEMO ============ -->
+<section class="demo" id="demo">
+  <div class="wrap demo-grid">
+    <div class="rev">
+      <span class="eyebrow" data-i18n="demoEyebrow">Hear it for yourself</span>
+      <h2 data-i18n="demoH2">This is your agent answering a real call.</h2>
+      <p class="sub" style="margin-top:16px" data-i18n="demoSub">Tap play and listen to how the Umbrella agent greets a caller, works out what they want, and makes the right decision — forward the customer, or shut the spam down. Every word below plays out exactly as it happens on a live line.</p>
+      <div class="scenario-tabs" role="tablist" aria-label="Choose a demo call">
+        <button class="tab active" id="tabReal" role="tab" aria-selected="true" data-i18n="tabReal">Real customer</button>
+        <button class="tab" id="tabSpam" role="tab" aria-selected="false" data-i18n="tabSpam">Spam call</button>
+      </div>
+      <p class="demo-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M11 5 6 9H2v6h4l5 4V5Zm5.5 2.5a5 5 0 0 1 0 9M19 4a9 9 0 0 1 0 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="demoNote">Turn your sound on — the agent speaks out loud on devices that support voice.</span>
+      </p>
+    </div>
+
+    <div class="rev">
+      <div class="phone" aria-live="polite">
+        <div class="phone-top">
+          <span class="agent-ava">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8Z" fill="#fff"/><path d="M12 11v7a2.5 2.5 0 0 0 5 0" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+          </span>
+          <div>
+            <b>Umbrella Agent</b>
+            <span class="phone-status" id="phoneStatus">Incoming call · ready to answer</span>
+          </div>
+        </div>
+        <div class="phone-body" id="phoneBody"></div>
+        <div class="phone-dock">
+          <button class="play-btn" id="playBtn" aria-label="Play demo call">
+            <svg id="icoPlay" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5Z"/></svg>
+            <svg id="icoStop" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+          </button>
+          <div class="wave" id="wave" aria-hidden="true"></div>
+          <span class="dock-time" id="dockTime">0:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how">
+  <div class="wrap">
+    <div class="rev">
+      <span class="eyebrow" data-i18n="howEyebrow">How it works</span>
+      <h2 data-i18n="howH2">Three steps. Ten minutes. Done.</h2>
+    </div>
+    <div class="steps">
+      <div class="step rev">
+        <span class="step-tag" data-i18n="step1tag">STEP 1</span>
+        <div class="step-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M15 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 data-i18n="step1h">Point your calls at us</h3>
+        <p data-i18n="step1p">Keep your existing business number. One simple forwarding setting sends incoming calls to your Umbrella agent — no new hardware, no new SIM, no app for your customers to learn.</p>
+      </div>
+      <div class="step rev">
+        <span class="step-tag" data-i18n="step2tag">STEP 2</span>
+        <div class="step-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        </div>
+        <h3 data-i18n="step2h">The agent answers &amp; screens</h3>
+        <p data-i18n="step2p">Every call is answered in two rings, in a natural voice with your business name. The agent asks what the call is about, spots robocalls and sales pitches instantly, and verifies real customers.</p>
+      </div>
+      <div class="step rev">
+        <span class="step-tag" data-i18n="step3tag">STEP 3</span>
+        <div class="step-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2.05Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 data-i18n="step3h">Real callers reach you</h3>
+        <p data-i18n="step3p">Genuine customers are forwarded straight to your phone with a heads-up on WhatsApp: who's calling and why. Everything else becomes a tidy message summary you can read when it suits you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="rev">
+      <span class="eyebrow" data-i18n="beneEyebrow">Why owners switch</span>
+      <h2 data-i18n="beneH2">Your phone goes quiet.<br>Your business gets louder.</h2>
+    </div>
+    <div class="bene-grid">
+      <div class="bene rev">
+        <div class="bene-stat">0 <small data-i18n="bene1stat">spam calls</small></div>
+        <h3 data-i18n="bene1h">Spam stops at the door</h3>
+        <p data-i18n="bene1p">Robocalls, warranty scams, and cold pitches never make your phone ring again. The agent identifies and dismisses them in seconds — politely, every time.</p>
+      </div>
+      <div class="bene rev">
+        <div class="bene-stat">5+ <small data-i18n="bene2stat">hrs / week</small></div>
+        <h3 data-i18n="bene2h">Your time comes back</h3>
+        <p data-i18n="bene2p">Stop dropping your tools, stepping off a job, or interrupting a client meeting for a call that turns out to be nothing. Only calls worth taking get through.</p>
+      </div>
+      <div class="bene rev">
+        <div class="bene-stat">100<small>%</small></div>
+        <h3 data-i18n="bene3h">Every lead captured</h3>
+        <p data-i18n="bene3p">Busy, off the clock, or on another line? The agent takes the details, books the callback, and sends you a summary — so a missed ring is never a missed job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section>
+  <div class="wrap">
+    <div class="rev">
+      <span class="eyebrow" data-i18n="quoteEyebrow">From real owners</span>
+      <h2 data-i18n="quoteH2">Small businesses, big difference.</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote rev">
+        <span class="stars">★★★★★</span>
+        <p data-i18n="q1">"I'm under a sink half the day. Now my phone only rings when it's an actual customer, and I get a WhatsApp telling me who it is before I even pick up. I've stopped losing jobs to voicemail."</p>
+        <div class="quote-who">
+          <span class="quote-ava" style="background:#0b5c4d">DK</span>
+          <div><b>Dana K.</b><small data-i18n="q1who">Owner, Keller Plumbing</small></div>
+        </div>
+      </div>
+      <div class="quote rev">
+        <span class="stars">★★★★★</span>
+        <p data-i18n="q2">"The spam blocking alone is worth it. I was getting eight or nine junk calls a day. It's been three weeks and I haven't heard a single robocall. My clients say the agent sounds genuinely friendly."</p>
+        <div class="quote-who">
+          <span class="quote-ava" style="background:#21c063">MT</span>
+          <div><b>Marcus T.</b><small data-i18n="q2who">Torres Landscape Design</small></div>
+        </div>
+      </div>
+      <div class="quote rev">
+        <span class="stars">★★★★★</span>
+        <p data-i18n="q3">"Set it up on a Sunday night in about ten minutes. Monday morning it screened a telemarketer and forwarded a new client back to back. It paid for the month before lunch."</p>
+        <div class="quote-who">
+          <span class="quote-ava" style="background:#3a8f77">AB</span>
+          <div><b>Aisha B.</b><small data-i18n="q3who">Bright Path Tutoring</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="rev" style="text-align:center">
+      <span class="eyebrow" style="justify-content:center" data-i18n="priceEyebrow">Simple pricing</span>
+      <h2 data-i18n="priceH2">Less than one missed job costs you.</h2>
+      <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 14-day free trial. No card required, cancel anytime.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan rev">
+        <h3 data-i18n="plan1h">Solo</h3>
+        <p class="for" data-i18n="plan1for">For one owner, one line</p>
+        <div class="price">$29<small data-i18n="perMonth1">/month</small></div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f1">Unlimited call answering &amp; screening</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f2">Spam &amp; robocall blocking</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f3">WhatsApp summaries &amp; alerts</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f4">Keep your existing number</span></li>
+        </ul>
+        <a href="#" class="btn btn-ghost" data-i18n="planCta1">Start free trial</a>
+      </div>
+      <div class="plan hot rev">
+        <span class="hot-tag" data-i18n="hotTag">Most popular</span>
+        <h3 data-i18n="plan2h">Team</h3>
+        <p class="for" data-i18n="plan2for">For crews and front desks</p>
+        <div class="price">$59<small data-i18n="perMonth2">/month</small></div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f1">Everything in Solo</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f2">Forward to up to 5 team members</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f3">Custom greeting &amp; business hours</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f4">Appointment &amp; callback booking</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f5">Priority support</span></li>
+        </ul>
+        <a href="#" class="btn btn-green" data-i18n="planCta2">Start free trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSER ============ -->
+<section class="closer">
+  <div class="wrap rev">
+    <h2 data-i18n="closerH2">The next call could be your best customer. Answer it every time.</h2>
+    <p data-i18n="closerP">Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.</p>
+    <a href="#pricing" class="btn btn-green" style="font-size:1.08rem;padding:17px 38px" data-i18n="closerCta">Start your free trial</a>
+    <p class="fine" data-i18n="closerFine">14 days free · No card required · Cancel anytime</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span data-i18n="footCopy">© 2026 Umbrella Dynamics. Calls covered.</span>
+    <span><a href="#demo" data-i18n="footDemo">Demo</a> &nbsp;·&nbsp; <a href="#how" data-i18n="footHow">How it works</a> &nbsp;·&nbsp; <a href="#pricing" data-i18n="footPricing">Pricing</a></span>
+  </div>
+</footer>
+
+<script>
+/* ================= THEME ================= */
+const themeBtn = document.getElementById('themeBtn');
+const icoSun = document.getElementById('icoSun');
+const icoMoon = document.getElementById('icoMoon');
+let theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', theme);
+  icoSun.style.display = theme === 'light' ? '' : 'none';
+  icoMoon.style.display = theme === 'dark' ? '' : 'none';
+}
+themeBtn.addEventListener('click', () => { theme = theme === 'light' ? 'dark' : 'light'; applyTheme(); });
+applyTheme();
+
+/* ================= TRANSLATIONS ================= */
+const I18N = {
+  en: {
+    navDemo:"Hear it live", navHow:"How it works", navPricing:"Pricing", navCta:"Start free trial",
+    heroEyebrow:"AI call screening for small business",
+    heroH1:'Never miss a <em>real customer</em> again.',
+    heroSub:"Your Umbrella agent answers every call, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — delivered through WhatsApp, so it works with the phone already in your pocket.",
+    ctaTrial:"Start your free trial", ctaHear:"Hear a live call",
+    trust1:"No new number needed", trust2:"Set up in 10 minutes", trust3:"Cancel anytime",
+    tickerLabel:"Today's calls", tickerLive:"agent on duty",
+    t1b:"Sarah M. — new quote", t1s:'"Need my gutters looked at this week"',
+    t2b:"Unknown — robocall", t2s:"Auto-warranty recording detected",
+    t3b:"Miguel R. — returning", t3s:'"Following up on Tuesday\'s invoice"',
+    t4b:"Unknown — telemarketer", t4s:"Bulk SEO sales pitch",
+    chipFwd:"forwarded", chipFwd2:"forwarded", chipBlock:"blocked", chipMsg:"took message",
+    tickerFoot:"Time saved today",
+    demoEyebrow:"Hear it for yourself",
+    demoH2:"This is your agent answering a real call.",
+    demoSub:"Tap play and listen to how the Umbrella agent greets a caller, works out what they want, and makes the right decision — forward the customer, or shut the spam down. Every word below plays out exactly as it happens on a live line.",
+    tabReal:"Real customer", tabSpam:"Spam call",
+    demoNote:"Turn your sound on — the agent speaks out loud on devices that support voice.",
+    howEyebrow:"How it works", howH2:"Three steps. Ten minutes. Done.",
+    step1tag:"STEP 1", step2tag:"STEP 2", step3tag:"STEP 3",
+    step1h:"Point your calls at us",
+    step1p:"Keep your existing business number. One simple forwarding setting sends incoming calls to your Umbrella agent — no new hardware, no new SIM, no app for your customers to learn.",
+    step2h:"The agent answers & screens",
+    step2p:"Every call is answered in two rings, in a natural voice with your business name. The agent asks what the call is about, spots robocalls and sales pitches instantly, and verifies real customers.",
+    step3h:"Real callers reach you",
+    step3p:"Genuine customers are forwarded straight to your phone with a heads-up on WhatsApp: who's calling and why. Everything else becomes a tidy message summary you can read when it suits you.",
+    beneEyebrow:"Why owners switch",
+    beneH2:"Your phone goes quiet.<br>Your business gets louder.",
+    bene1stat:"spam calls", bene1h:"Spam stops at the door",
+    bene1p:"Robocalls, warranty scams, and cold pitches never make your phone ring again. The agent identifies and dismisses them in seconds — politely, every time.",
+    bene2stat:"hrs / week", bene2h:"Your time comes back",
+    bene2p:"Stop dropping your tools, stepping off a job, or interrupting a client meeting for a call that turns out to be nothing. Only calls worth taking get through.",
+    bene3h:"Every lead captured",
+    bene3p:"Busy, off the clock, or on another line? The agent takes the details, books the callback, and sends you a summary — so a missed ring is never a missed job.",
+    quoteEyebrow:"From real owners", quoteH2:"Small businesses, big difference.",
+    q1:'"I\'m under a sink half the day. Now my phone only rings when it\'s an actual customer, and I get a WhatsApp telling me who it is before I even pick up. I\'ve stopped losing jobs to voicemail."',
+    q1who:"Owner, Keller Plumbing",
+    q2:'"The spam blocking alone is worth it. I was getting eight or nine junk calls a day. It\'s been three weeks and I haven\'t heard a single robocall. My clients say the agent sounds genuinely friendly."',
+    q2who:"Torres Landscape Design",
+    q3:'"Set it up on a Sunday night in about ten minutes. Monday morning it screened a telemarketer and forwarded a new client back to back. It paid for the month before lunch."',
+    q3who:"Bright Path Tutoring",
+    priceEyebrow:"Simple pricing", priceH2:"Less than one missed job costs you.",
+    priceSub:"Every plan starts with a 14-day free trial. No card required, cancel anytime.",
+    plan1h:"Solo", plan1for:"For one owner, one line", perMonth1:"/month", perMonth2:"/month",
+    p1f1:"Unlimited call answering & screening", p1f2:"Spam & robocall blocking",
+    p1f3:"WhatsApp summaries & alerts", p1f4:"Keep your existing number",
+    planCta1:"Start free trial", planCta2:"Start free trial",
+    hotTag:"Most popular", plan2h:"Team", plan2for:"For crews and front desks",
+    p2f1:"Everything in Solo", p2f2:"Forward to up to 5 team members",
+    p2f3:"Custom greeting & business hours", p2f4:"Appointment & callback booking", p2f5:"Priority support",
+    closerH2:"The next call could be your best customer. Answer it every time.",
+    closerP:"Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.",
+    closerCta:"Start your free trial",
+    closerFine:"14 days free · No card required · Cancel anytime",
+    footCopy:"© 2026 Umbrella Dynamics. Calls covered.",
+    footDemo:"Demo", footHow:"How it works", footPricing:"Pricing",
+    // dynamic strings
+    statusReady:"Incoming call · ready to answer",
+    statusOnCall:"On a call · screening",
+    statusDoneReal:"Customer forwarded ✓", statusDoneSpam:"Spam blocked ✓",
+    pressPlay:"Press play to answer the incoming call",
+    whoAgent:"Umbrella agent", whoCaller:"Caller",
+    ariaPlay:"Play demo call", ariaStop:"Stop demo call"
+  },
+  es: {
+    navDemo:"Escúchalo en vivo", navHow:"Cómo funciona", navPricing:"Precios", navCta:"Prueba gratis",
+    heroEyebrow:"Filtrado de llamadas con IA para pequeños negocios",
+    heroH1:'No vuelvas a perder un <em>cliente real</em>.',
+    heroSub:"Tu agente Umbrella contesta cada llamada, filtra el spam y las llamadas automáticas en segundos, y transfiere a los clientes genuinos directamente a ti — todo a través de WhatsApp, con el teléfono que ya llevas en el bolsillo.",
+    ctaTrial:"Comienza tu prueba gratis", ctaHear:"Escucha una llamada real",
+    trust1:"Sin número nuevo", trust2:"Listo en 10 minutos", trust3:"Cancela cuando quieras",
+    tickerLabel:"Llamadas de hoy", tickerLive:"agente en servicio",
+    t1b:"Sarah M. — presupuesto nuevo", t1s:'"Necesito revisar mis canaletas esta semana"',
+    t2b:"Desconocido — robollamada", t2s:"Grabación de garantía de auto detectada",
+    t3b:"Miguel R. — cliente habitual", t3s:'"Seguimiento de la factura del martes"',
+    t4b:"Desconocido — telemarketing", t4s:"Venta masiva de servicios SEO",
+    chipFwd:"transferida", chipFwd2:"transferida", chipBlock:"bloqueada", chipMsg:"tomó mensaje",
+    tickerFoot:"Tiempo ahorrado hoy",
+    demoEyebrow:"Escúchalo tú mismo",
+    demoH2:"Así contesta tu agente una llamada real.",
+    demoSub:"Pulsa play y escucha cómo el agente Umbrella saluda al que llama, entiende qué necesita y toma la decisión correcta: transferir al cliente o cortar el spam. Cada palabra de abajo ocurre exactamente igual en una línea real.",
+    tabReal:"Cliente real", tabSpam:"Llamada spam",
+    demoNote:"Sube el volumen — el agente habla en voz alta en dispositivos compatibles.",
+    howEyebrow:"Cómo funciona", howH2:"Tres pasos. Diez minutos. Listo.",
+    step1tag:"PASO 1", step2tag:"PASO 2", step3tag:"PASO 3",
+    step1h:"Dirige tus llamadas hacia nosotros",
+    step1p:"Conserva tu número de siempre. Un simple desvío envía las llamadas entrantes a tu agente Umbrella — sin equipos nuevos, sin SIM nueva, sin apps que tus clientes tengan que aprender.",
+    step2h:"El agente contesta y filtra",
+    step2p:"Cada llamada se contesta en dos tonos, con una voz natural y el nombre de tu negocio. El agente pregunta el motivo, detecta robollamadas y ventas al instante, y verifica a los clientes reales.",
+    step3h:"Los clientes reales llegan a ti",
+    step3p:"Los clientes genuinos se transfieren directo a tu teléfono con un aviso por WhatsApp: quién llama y por qué. Todo lo demás se convierte en un resumen que lees cuando te convenga.",
+    beneEyebrow:"Por qué cambian los dueños",
+    beneH2:"Tu teléfono se calma.<br>Tu negocio crece.",
+    bene1stat:"llamadas spam", bene1h:"El spam se queda en la puerta",
+    bene1p:"Las robollamadas, estafas de garantías y ventas en frío nunca vuelven a hacer sonar tu teléfono. El agente las identifica y despide en segundos — con cortesía, siempre.",
+    bene2stat:"hrs / semana", bene2h:"Recuperas tu tiempo",
+    bene2p:"Deja de soltar las herramientas, salir de un trabajo o interrumpir una reunión por una llamada que no vale nada. Solo pasan las llamadas que importan.",
+    bene3h:"Ningún cliente perdido",
+    bene3p:"¿Ocupado, fuera de horario o en otra línea? El agente toma los datos, agenda la devolución de llamada y te envía un resumen — un timbre perdido nunca más será un trabajo perdido.",
+    quoteEyebrow:"De dueños reales", quoteH2:"Negocios pequeños, gran diferencia.",
+    q1:'"Paso medio día debajo de un fregadero. Ahora mi teléfono solo suena cuando es un cliente de verdad, y me llega un WhatsApp diciéndome quién es antes de contestar. Dejé de perder trabajos por el buzón de voz."',
+    q1who:"Dueña, Keller Plumbing",
+    q2:'"Solo el bloqueo de spam ya lo vale. Recibía ocho o nueve llamadas basura al día. Llevo tres semanas sin escuchar una sola robollamada. Mis clientes dicen que el agente suena muy amable."',
+    q2who:"Torres Landscape Design",
+    q3:'"Lo configuré un domingo por la noche en unos diez minutos. El lunes por la mañana filtró a un vendedor y me transfirió un cliente nuevo, uno tras otro. Se pagó el mes antes del almuerzo."',
+    q3who:"Bright Path Tutoring",
+    priceEyebrow:"Precios simples", priceH2:"Menos de lo que te cuesta un trabajo perdido.",
+    priceSub:"Todos los planes comienzan con 14 días gratis. Sin tarjeta, cancela cuando quieras.",
+    plan1h:"Solo", plan1for:"Para un dueño, una línea", perMonth1:"/mes", perMonth2:"/mes",
+    p1f1:"Respuesta y filtrado ilimitados", p1f2:"Bloqueo de spam y robollamadas",
+    p1f3:"Resúmenes y alertas por WhatsApp", p1f4:"Conserva tu número actual",
+    planCta1:"Prueba gratis", planCta2:"Prueba gratis",
+    hotTag:"Más popular", plan2h:"Equipo", plan2for:"Para cuadrillas y recepciones",
+    p2f1:"Todo lo del plan Solo", p2f2:"Transferencia hasta 5 miembros del equipo",
+    p2f3:"Saludo personalizado y horario comercial", p2f4:"Citas y devolución de llamadas", p2f5:"Soporte prioritario",
+    closerH2:"La próxima llamada podría ser tu mejor cliente. Contéstala siempre.",
+    closerP:"Configúralo esta noche en diez minutos. Mañana por la mañana, el spam habrá desaparecido y cada cliente real llegará a ti.",
+    closerCta:"Comienza tu prueba gratis",
+    closerFine:"14 días gratis · Sin tarjeta · Cancela cuando quieras",
+    footCopy:"© 2026 Umbrella Dynamics. Llamadas cubiertas.",
+    footDemo:"Demo", footHow:"Cómo funciona", footPricing:"Precios",
+    statusReady:"Llamada entrante · listo para contestar",
+    statusOnCall:"En llamada · filtrando",
+    statusDoneReal:"Cliente transferido ✓", statusDoneSpam:"Spam bloqueado ✓",
+    pressPlay:"Pulsa play para contestar la llamada entrante",
+    whoAgent:"Agente Umbrella", whoCaller:"Llamante",
+    ariaPlay:"Reproducir llamada de demostración", ariaStop:"Detener llamada de demostración"
+  }
+};
+
+/* demo call scripts per language */
+const SCRIPTS = {
+  en: {
+    real: [
+      { t:'sys',  txt:'Incoming call · 0:02 to answer' },
+      { t:'agent', txt:"Good morning, you've reached Keller Plumbing. This is the assistant — how can I help you today?" },
+      { t:'caller', txt:"Hi, yeah — my water heater's leaking and I'd love to get someone out this week if possible." },
+      { t:'agent', txt:"Sorry to hear that — we can definitely help. Can I grab your name so I can put you straight through to Dana?" },
+      { t:'caller', txt:"It's Sarah Mitchell, on Elm Street." },
+      { t:'sysgood', txt:'✓ Verified: new customer · water heater repair' },
+      { t:'agent', txt:"Thanks, Sarah. Connecting you to Dana now — she'll pick right up." },
+      { t:'sysgood', txt:'→ Forwarded to owner · WhatsApp summary sent' }
+    ],
+    spam: [
+      { t:'sys',  txt:'Incoming call · unknown number' },
+      { t:'agent', txt:"Good morning, you've reached Keller Plumbing. This is the assistant — how can I help you today?" },
+      { t:'caller', txt:"We've been trying to reach you concerning your vehicle's extended warranty—" },
+      { t:'sysbad', txt:'⚠ Pattern match: robocall script detected' },
+      { t:'agent', txt:"This line is for Keller Plumbing customers only. Please remove this number from your list. Goodbye." },
+      { t:'sysbad', txt:'✕ Call ended · number blocked · owner never disturbed' },
+      { t:'sysgood', txt:'Logged quietly — 0 seconds of your time used' }
+    ]
+  },
+  es: {
+    real: [
+      { t:'sys',  txt:'Llamada entrante · contestada en 0:02' },
+      { t:'agent', txt:"Buenos días, ha llamado a Keller Plumbing. Le atiende el asistente — ¿en qué puedo ayudarle hoy?" },
+      { t:'caller', txt:"Hola, sí — mi calentador de agua tiene una fuga y me encantaría que alguien viniera esta semana si es posible." },
+      { t:'agent', txt:"Lamento escucharlo — claro que podemos ayudar. ¿Me da su nombre para pasarle directamente con Dana?" },
+      { t:'caller', txt:"Soy Sarah Mitchell, de la calle Elm." },
+      { t:'sysgood', txt:'✓ Verificado: cliente nuevo · reparación de calentador' },
+      { t:'agent', txt:"Gracias, Sarah. Le conecto con Dana ahora mismo — enseguida le atiende." },
+      { t:'sysgood', txt:'→ Transferida al dueño · resumen enviado por WhatsApp' }
+    ],
+    spam: [
+      { t:'sys',  txt:'Llamada entrante · número desconocido' },
+      { t:'agent', txt:"Buenos días, ha llamado a Keller Plumbing. Le atiende el asistente — ¿en qué puedo ayudarle hoy?" },
+      { t:'caller', txt:"Hemos intentado contactarle sobre la garantía extendida de su vehículo—" },
+      { t:'sysbad', txt:'⚠ Coincidencia: guion de robollamada detectado' },
+      { t:'agent', txt:"Esta línea es solo para clientes de Keller Plumbing. Por favor elimine este número de su lista. Adiós." },
+      { t:'sysbad', txt:'✕ Llamada finalizada · número bloqueado · el dueño nunca fue molestado' },
+      { t:'sysgood', txt:'Registrado en silencio — 0 segundos de tu tiempo' }
+    ]
+  }
+};
+
+let lang = 'en';
+const langSelect = document.getElementById('langSelect');
+
+function t(key){ return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || ''; }
+
+function setLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = I18N[l][el.dataset.i18n];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  stopDemo(true); // reset demo with translated placeholder + status
+}
+langSelect.addEventListener('change', e => setLang(e.target.value));
+
+/* ================= WAVEFORM ================= */
+const wave = document.getElementById('wave');
+for (let i = 0; i < 26; i++) wave.appendChild(document.createElement('i'));
+
+/* ================= SCROLL REVEAL ================= */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: 0.12 });
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+/* ================= DEMO PLAYER ================= */
+const body   = document.getElementById('phoneBody');
+const status = document.getElementById('phoneStatus');
+const btn    = document.getElementById('playBtn');
+const icoPlay = document.getElementById('icoPlay');
+const icoStop = document.getElementById('icoStop');
+const dockTime = document.getElementById('dockTime');
+const tabReal = document.getElementById('tabReal');
+const tabSpam = document.getElementById('tabSpam');
+
+let scenario = 'real';
+let playing = false;
+let timers = [];
+let clockTimer = null;
+
+function setTabs(which){
+  scenario = which;
+  tabReal.classList.toggle('active', which==='real');
+  tabSpam.classList.toggle('active', which==='spam');
+  tabReal.setAttribute('aria-selected', which==='real');
+  tabSpam.setAttribute('aria-selected', which==='spam');
+  stopDemo(true);
+}
+tabReal.addEventListener('click', () => setTabs('real'));
+tabSpam.addEventListener('click', () => setTabs('spam'));
+
+function bubble(step){
+  const d = document.createElement('div');
+  if (step.t === 'agent'){
+    d.className = 'bubble bub-agent';
+    d.innerHTML = '<span class="bub-who">' + t('whoAgent') + '</span>' + step.txt;
+  } else if (step.t === 'caller'){
+    d.className = 'bubble bub-caller';
+    d.innerHTML = '<span class="bub-who">' + t('whoCaller') + '</span>' + step.txt;
+  } else {
+    d.className = 'bubble bub-sys' + (step.t==='sysgood' ? ' good' : step.t==='sysbad' ? ' bad' : '');
+    d.textContent = step.txt;
+  }
+  body.appendChild(d);
+  body.scrollTop = body.scrollHeight;
+}
+
+function speak(step){
+  if (!('speechSynthesis' in window)) return;
+  try {
+    const u = new SpeechSynthesisUtterance(step.txt.replace(/—/g,', '));
+    u.lang = lang === 'es' ? 'es-ES' : 'en-US';
+    u.rate = 1.02;
+    u.pitch = step.t === 'agent' ? 1.08 : 0.9;
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+
+function stopDemo(resetBody){
+  playing = false;
+  timers.forEach(clearTimeout); timers = [];
+  if (clockTimer) clearInterval(clockTimer);
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  wave.classList.remove('on');
+  icoPlay.style.display = ''; icoStop.style.display = 'none';
+  btn.setAttribute('aria-label', t('ariaPlay'));
+  status.textContent = t('statusReady');
+  dockTime.textContent = '0:00';
+  if (resetBody){
+    body.innerHTML = '<div class="bubble bub-sys">' + t('pressPlay') + '</div>';
+  }
+}
+
+function startDemo(){
+  playing = true;
+  body.innerHTML = '';
+  wave.classList.add('on');
+  icoPlay.style.display = 'none'; icoStop.style.display = '';
+  btn.setAttribute('aria-label', t('ariaStop'));
+  status.textContent = t('statusOnCall');
+
+  let sec = 0;
+  clockTimer = setInterval(()=>{ sec++; dockTime.textContent = '0:' + String(sec).padStart(2,'0'); }, 1000);
+
+  const steps = SCRIPTS[lang][scenario];
+  let delay = 300;
+  steps.forEach((step) => {
+    timers.push(setTimeout(() => {
+      bubble(step);
+      if (step.t === 'agent' || step.t === 'caller') speak(step);
+      if (step.t.startsWith('sys')) status.textContent = step.txt.replace(/[✓✕⚠→] ?/,'');
+    }, delay));
+    delay += (step.t === 'agent' || step.t === 'caller')
+      ? Math.max(2200, step.txt.length * 62)
+      : 1400;
+  });
+  timers.push(setTimeout(() => {
+    wave.classList.remove('on');
+    icoPlay.style.display = ''; icoStop.style.display = 'none';
+    if (clockTimer) clearInterval(clockTimer);
+    status.textContent = scenario === 'real' ? t('statusDoneReal') : t('statusDoneSpam');
+    playing = false;
+  }, delay + 400));
+}
+
+btn.addEventListener('click', () => playing ? stopDemo(false) : startDemo());
+
+/* initialize placeholder + status in current language */
+stopDemo(true);
+</script>
+</body>
+</html>
