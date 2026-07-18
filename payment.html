@@ -79,12 +79,14 @@
   <div class="total-row"><span data-i18n="dueToday">Due today</span><span class="amt" id="dueToday">$99.00</span></div>
   <p class="save" data-i18n="afterTrial">✓ Setup fee fully refunded if you're not satisfied by the end of your 7-day trial.</p>
 
+  <div id="promoSection">
   <label data-i18n="promoLbl">Promo code</label>
   <div class="promo">
     <input id="promoInput" placeholder="FOUNDER">
     <button class="btn btn-ghost" onclick="applyPromo()" data-i18n="apply">Apply</button>
   </div>
   <p class="fine" id="promoMsg"></p>
+  </div>
 </div>
 
 <div class="card">
@@ -129,12 +131,32 @@
 <p style="text-align:center"><a class="back" href="index.html" data-i18n="back">← Back to Umbrella Dynamics</a></p>
 
 <script>
-const PLANS = {
-  starter:{en:"Starter",es:"Inicial",price:99},
-  growth:{en:"Growth",es:"Crecimiento",price:149},
-  premium:{en:"Premium",es:"Premium",price:249},
+/* ================= UMBRELLA DYNAMICS CHECKOUT CONFIG =================
+   Everything adjustable lives here. Edit values, re-upload, done.       */
+const CONFIG = {
+  // --- Promo codes: flip to true to re-enable the promo box ---
+  promoEnabled: false,
+
+  // --- Stripe Payment Links: paste each plan link URL when created.
+  //     While empty, buttons stay in demo mode. ---
+  stripeLinks: {
+    starter: "",
+    growth:  "",
+    premium: "",
+  },
+
+  // --- Pricing per language. Both currently USD; to show a different
+  //     currency on the Spanish page, change sym/code/amounts for "es". ---
+  pricing: {
+    en: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 },
+    es: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 },
+  },
 };
-const SETUP = 99;
+const PLANS = {
+  starter:{en:"Starter",es:"Inicial"},
+  growth:{en:"Growth",es:"Crecimiento"},
+  premium:{en:"Premium",es:"Premium"},
+};
 const PROMOS = {
   FOUNDER:{type:"setup",note:{en:"Founding client — setup fee waived",es:"Cliente fundador — configuración gratis"}},
   LAUNCH10:{type:"month",pct:10,note:{en:"10% off your first month",es:"10% de descuento en tu primer mes"}}};
@@ -149,7 +171,7 @@ const I18N = {
       startTrial:"Pay setup & start trial",continueW:"Continue",
       waSub:"Prefer to talk it through first? Confirm your plan over WhatsApp and we'll set everything up together.",
       waBtn:"Continue on WhatsApp",
-      okMsg:"✓ Demo complete — in the live version, this is where your trial begins.",
+      okMsg:"✓ Demo complete — live payments arrive with Stripe. Next step: <a href='onboard.html'>complete your onboarding</a>.",
       secure:"🔒 Payments will be processed securely by Stripe · Cancel anytime",
       back:"← Back to Umbrella Dynamics",
       promoOk:"✓ Applied: ",promoBad:"Code not recognized (demo codes: FOUNDER, LAUNCH10)"},
@@ -163,7 +185,7 @@ const I18N = {
       startTrial:"Pagar configuración y comenzar",continueW:"Continuar",
       waSub:"¿Prefieres hablarlo primero? Confirma tu plan por WhatsApp y lo configuramos todo juntos.",
       waBtn:"Continuar en WhatsApp",
-      okMsg:"✓ Demostración completa — en la versión real, aquí comienza tu prueba.",
+      okMsg:"✓ Demostración completa — los pagos reales llegan con Stripe. Siguiente paso: <a href='onboard.html'>completa tu registro</a>.",
       secure:"🔒 Los pagos serán procesados de forma segura por Stripe · Cancela cuando quieras",
       back:"← Volver a Umbrella Dynamics",
       promoOk:"✓ Aplicado: ",promoBad:"Código no reconocido (códigos demo: FOUNDER, LAUNCH10)"},
@@ -175,8 +197,13 @@ const plan = PLANS[params.get("plan")] ? params.get("plan") : "growth";
 function render(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const v = I18N[lang][el.dataset.i18n]; if(v!==undefined) el.innerHTML=v;});
+  const P = CONFIG.pricing[lang];
+  const codeTag = P.code === "USD" ? "" : " " + P.code;
   document.getElementById("planName").textContent = PLANS[plan][lang];
-  document.getElementById("planPrice").textContent = "$"+PLANS[plan].price;
+  document.getElementById("planPrice").textContent = P.sym + P[plan] + codeTag;
+  document.getElementById("setupPrice").textContent = P.sym + P.setup + codeTag;
+  document.getElementById("dueToday").textContent = P.sym + P.setup.toFixed(2) + codeTag;
+  document.getElementById("promoSection").style.display = CONFIG.promoEnabled ? "" : "none";
   document.getElementById("len").classList.toggle("active",lang==="en");
   document.getElementById("les").classList.toggle("active",lang==="es");
   document.documentElement.lang = lang;
@@ -193,20 +220,21 @@ function applyPromo(){
   if(PROMOS[code]){
     const p=PROMOS[code];
     row.style.display="flex";
+    const SETUP = CONFIG.pricing[lang].setup, SYM = CONFIG.pricing[lang].sym;
     if(p.type==="setup"){
-      document.getElementById("discountAmt").textContent="-$"+SETUP+" ("+code+")";
-      due.textContent="$0.00";
-      setupEl.innerHTML="<s>$"+SETUP+"</s> $0";
+      document.getElementById("discountAmt").textContent="-"+SYM+SETUP+" ("+code+")";
+      due.textContent=SYM+"0.00";
+      setupEl.innerHTML="<s>"+SYM+SETUP+"</s> "+SYM+"0";
     } else {
       document.getElementById("discountAmt").textContent="-"+p.pct+"% first month ("+code+")";
-      due.textContent="$"+SETUP+".00";
-      setupEl.textContent="$"+SETUP;
+      due.textContent=SYM+SETUP.toFixed(2);
+      setupEl.textContent=SYM+SETUP;
     }
     msg.textContent=I18N[lang].promoOk+p.note[lang]; msg.style.color="#137a42";
   } else {
     row.style.display="none";
-    due.textContent="$"+SETUP+".00";
-    setupEl.textContent="$"+SETUP;
+    due.textContent=CONFIG.pricing[lang].sym+CONFIG.pricing[lang].setup.toFixed(2);
+    setupEl.textContent=CONFIG.pricing[lang].sym+CONFIG.pricing[lang].setup;
     msg.textContent=I18N[lang].promoBad; msg.style.color="#b3402f";
   }
 }
@@ -216,8 +244,29 @@ function pickPm(el){
   el.classList.add("active");
   document.getElementById("pm-"+el.dataset.pm).classList.add("active");
 }
-function mockPay(){ document.getElementById("okMsg").style.display="block";
-  document.getElementById("okMsg").scrollIntoView({behavior:"smooth",block:"center"}); }
+function mockPay(){
+  const link = CONFIG.stripeLinks[plan];
+  if (link) {
+    let url = link;
+    try {
+      const ref = localStorage.getItem("ud_ref");
+      if (ref) url += (url.includes("?") ? "&" : "?") + "client_reference_id=" + encodeURIComponent(ref);
+    } catch(e){}
+    location.href = url;
+    return;
+  }
+  const ok = document.getElementById("okMsg");
+  ok.style.display="block";
+  ok.scrollIntoView({behavior:"smooth",block:"center"});
+}
+try {
+  const qp = new URLSearchParams(location.search);
+  const r = qp.get("via") || qp.get("ref");
+  if (r) localStorage.setItem("ud_ref", r.slice(0,40));
+} catch(e){}
+if (CONFIG.stripeLinks.starter || CONFIG.stripeLinks.growth || CONFIG.stripeLinks.premium){
+  document.querySelector(".demo-banner").style.display = "none";
+}
 render();
 </script>
 </body>
