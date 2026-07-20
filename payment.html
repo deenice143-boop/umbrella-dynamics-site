@@ -75,18 +75,10 @@
   <div class="plan-row"><span data-i18n="planLbl">Plan</span><b id="planName">Growth</b></div>
   <div class="plan-row"><span data-i18n="monthly">Monthly price (starts day 8, after your trial)</span><b id="planPrice">$149</b></div>
   <div class="plan-row"><span data-i18n="setup">One-time setup (due today)</span><b id="setupPrice">$99</b></div>
-  <div class="plan-row" id="discountRow" style="display:none;color:#137a42"><span data-i18n="discount">Promo applied</span><b id="discountAmt"></b></div>
   <div class="total-row"><span data-i18n="dueToday">Due today</span><span class="amt" id="dueToday">$99.00</span></div>
-  <p class="save" data-i18n="afterTrial">✓ Setup fee fully refunded if you're not satisfied by the end of your 7-day trial.</p>
+  <p class="save" data-i18n="afterTrial">7-day service trial · monthly billing begins on day 8.</p>
 
-  <div id="promoSection">
-  <label data-i18n="promoLbl">Promo code</label>
-  <div class="promo">
-    <input id="promoInput" placeholder="FOUNDER">
-    <button class="btn btn-ghost" onclick="applyPromo()" data-i18n="apply">Apply</button>
-  </div>
-  <p class="fine" id="promoMsg"></p>
-  </div>
+
 </div>
 
 <div class="card">
@@ -134,61 +126,52 @@
 /* ================= UMBRELLA DYNAMICS CHECKOUT CONFIG =================
    Everything adjustable lives here. Edit values, re-upload, done.       */
 const CONFIG = {
-  // --- Promo codes: flip to true to re-enable the promo box ---
-  promoEnabled: false,
-
   // --- Stripe Payment Links: paste each plan link URL when created.
   //     While empty, buttons stay in demo mode. ---
   stripeLinks: {
     starter: "",
     growth:  "",
-    premium: "",
+    premium: ""
   },
 
   // --- Pricing per language. Both currently USD; to show a different
   //     currency on the Spanish page, change sym/code/amounts for "es". ---
   pricing: {
     en: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 },
-    es: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 },
-  },
+    es: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 }
+  }
 };
 const PLANS = {
   starter:{en:"Starter",es:"Inicial"},
   growth:{en:"Growth",es:"Crecimiento"},
-  premium:{en:"Premium",es:"Premium"},
+  premium:{en:"Premium",es:"Premium"}
 };
-const PROMOS = {
-  FOUNDER:{type:"setup",note:{en:"Founding client — setup fee waived",es:"Cliente fundador — configuración gratis"}},
-  LAUNCH10:{type:"month",pct:10,note:{en:"10% off your first month",es:"10% de descuento en tu primer mes"}}};
+
 const I18N = {
   en:{banner:"⚠ Demo checkout — no real payments are processed yet. Live billing launches with Stripe soon.",
       h1:"Start your 7-day service trial",
-      sub:"Today covers your one-time setup only — we build, connect, and tune your agent within 48 hours. Monthly billing starts on day 8, and you can cancel anytime.",
-      planLbl:"Plan",monthly:"Monthly price (starts day 8, after your trial)",setup:"One-time setup (due today)",discount:"Promo applied",
-      dueToday:"Due today",afterTrial:"✓ Setup fee fully refunded if you're not satisfied by the end of your 7-day trial.",
-      promoLbl:"Promo code",apply:"Apply",payTitle:"Payment method",pmCard:"Card",
+      sub:"Today covers your one-time setup — we build, connect, and tune your agent within 48 hours. Monthly billing starts on day 8. You can cancel anytime.",
+      planLbl:"Plan",monthly:"Monthly price (starts day 8, after your trial)",setup:"One-time setup (due today)",dueToday:"Due today",afterTrial:"7-day service trial · monthly billing begins on day 8.",
+      payTitle:"Payment method",pmCard:"Card",
       cardName:"Name on card",cardNum:"Card number",cardExp:"Expiry",
       startTrial:"Pay setup & start trial",continueW:"Continue",
       waSub:"Prefer to talk it through first? Confirm your plan over WhatsApp and we'll set everything up together.",
       waBtn:"Continue on WhatsApp",
       okMsg:"✓ Demo complete — live payments arrive with Stripe. Next step: <a href='onboard.html'>complete your onboarding</a>.",
       secure:"🔒 Payments will be processed securely by Stripe · Cancel anytime",
-      back:"← Back to Umbrella Dynamics",
-      promoOk:"✓ Applied: ",promoBad:"Code not recognized (demo codes: FOUNDER, LAUNCH10)"},
+      back:"← Back to Umbrella Dynamics"},
   es:{banner:"⚠ Pago de demostración — aún no se procesan pagos reales. La facturación llega pronto con Stripe.",
       h1:"Comienza tu prueba de servicio de 7 días",
-      sub:"Hoy solo cubres la configuración única — construimos, conectamos y ajustamos tu agente en 48 horas. La facturación mensual comienza el día 8, y puedes cancelar cuando quieras.",
-      planLbl:"Plan",monthly:"Precio mensual (comienza el día 8, tras tu prueba)",setup:"Configuración única (a pagar hoy)",discount:"Promo aplicada",
-      dueToday:"A pagar hoy",afterTrial:"✓ Configuración totalmente reembolsable si no estás satisfecho al final de tu prueba de 7 días.",
-      promoLbl:"Código promocional",apply:"Aplicar",payTitle:"Método de pago",pmCard:"Tarjeta",
+      sub:"Hoy cubres la configuración única — construimos, conectamos y ajustamos tu agente en 48 horas. La facturación mensual comienza el día 8. Puedes cancelar cuando quieras.",
+      planLbl:"Plan",monthly:"Precio mensual (comienza el día 8, tras tu prueba)",setup:"Configuración única (a pagar hoy)",dueToday:"A pagar hoy",afterTrial:"Prueba de servicio de 7 días · facturación mensual comienza el día 8.",
+      payTitle:"Método de pago",pmCard:"Tarjeta",
       cardName:"Nombre en la tarjeta",cardNum:"Número de tarjeta",cardExp:"Vence",
       startTrial:"Pagar configuración y comenzar",continueW:"Continuar",
       waSub:"¿Prefieres hablarlo primero? Confirma tu plan por WhatsApp y lo configuramos todo juntos.",
       waBtn:"Continuar en WhatsApp",
       okMsg:"✓ Demostración completa — los pagos reales llegan con Stripe. Siguiente paso: <a href='onboard.html'>completa tu registro</a>.",
       secure:"🔒 Los pagos serán procesados de forma segura por Stripe · Cancela cuando quieras",
-      back:"← Volver a Umbrella Dynamics",
-      promoOk:"✓ Aplicado: ",promoBad:"Código no reconocido (códigos demo: FOUNDER, LAUNCH10)"},
+      back:"← Volver a Umbrella Dynamics"}
 };
 let lang = "en";
 const params = new URLSearchParams(location.search);
@@ -203,7 +186,6 @@ function render(){
   document.getElementById("planPrice").textContent = P.sym + P[plan] + codeTag;
   document.getElementById("setupPrice").textContent = P.sym + P.setup + codeTag;
   document.getElementById("dueToday").textContent = P.sym + P.setup.toFixed(2) + codeTag;
-  document.getElementById("promoSection").style.display = CONFIG.promoEnabled ? "" : "none";
   document.getElementById("len").classList.toggle("active",lang==="en");
   document.getElementById("les").classList.toggle("active",lang==="es");
   document.documentElement.lang = lang;
@@ -211,33 +193,6 @@ function render(){
 document.getElementById("len").onclick=()=>{lang="en";render()};
 document.getElementById("les").onclick=()=>{lang="es";render()};
 
-function applyPromo(){
-  const code=(document.getElementById("promoInput").value||"").trim().toUpperCase();
-  const msg=document.getElementById("promoMsg");
-  const row=document.getElementById("discountRow");
-  const due=document.getElementById("dueToday");
-  const setupEl=document.getElementById("setupPrice");
-  if(PROMOS[code]){
-    const p=PROMOS[code];
-    row.style.display="flex";
-    const SETUP = CONFIG.pricing[lang].setup, SYM = CONFIG.pricing[lang].sym;
-    if(p.type==="setup"){
-      document.getElementById("discountAmt").textContent="-"+SYM+SETUP+" ("+code+")";
-      due.textContent=SYM+"0.00";
-      setupEl.innerHTML="<s>"+SYM+SETUP+"</s> "+SYM+"0";
-    } else {
-      document.getElementById("discountAmt").textContent="-"+p.pct+"% first month ("+code+")";
-      due.textContent=SYM+SETUP.toFixed(2);
-      setupEl.textContent=SYM+SETUP;
-    }
-    msg.textContent=I18N[lang].promoOk+p.note[lang]; msg.style.color="#137a42";
-  } else {
-    row.style.display="none";
-    due.textContent=CONFIG.pricing[lang].sym+CONFIG.pricing[lang].setup.toFixed(2);
-    setupEl.textContent=CONFIG.pricing[lang].sym+CONFIG.pricing[lang].setup;
-    msg.textContent=I18N[lang].promoBad; msg.style.color="#b3402f";
-  }
-}
 function pickPm(el){
   document.querySelectorAll(".pm").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll(".pm-panel").forEach(p=>p.classList.remove("active"));

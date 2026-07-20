@@ -210,22 +210,28 @@
   /* ---------- hero ticker card ---------- */
   .ticker-card{
     background:#0a0d10;color:#e7eee9;border:none;border-radius:32px;
-    box-shadow:none;padding:52px 22px 22px;
+    box-shadow:none;padding:52px 20px 20px;
     max-width:100%;margin:0;
+    /* Height locked to match the demo phone below. If content overflows,
+       gently scroll rather than stretching the whole phone frame. */
+    max-height:520px;
+    overflow-y:auto;
   }
-  .ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+  .ticker-card::-webkit-scrollbar{display:none}
+  .ticker-card{scrollbar-width:none}
+  .ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .ticker-head .label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#8fa39a}
   .live-dot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.72rem;color:#6fd9a4}
   .live-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(33,192,99,.5)}50%{box-shadow:0 0 0 7px rgba(33,192,99,0)}}
-  .call-row{display:flex;align-items:center;gap:13px;padding:12px 8px;border-radius:14px;animation:rowIn .5s ease both}
+  .call-row{display:flex;align-items:center;gap:11px;padding:9px 6px;border-radius:12px;animation:rowIn .5s ease both}
   .call-row + .call-row{border-top:1px solid rgba(255,255,255,.06)}
   .call-row:nth-child(2){animation-delay:.25s}.call-row:nth-child(3){animation-delay:.5s}.call-row:nth-child(4){animation-delay:.75s}
   @keyframes rowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  .call-ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:1rem}
+  .call-ava{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:.95rem}
   .call-info{flex:1;min-width:0}
-  .call-info b{display:block;font-size:.9rem;font-weight:600;color:#e7eee9}
-  .call-info small{color:#8fa39a;font-size:.76rem}
+  .call-info b{display:block;font-size:.86rem;font-weight:600;color:#e7eee9}
+  .call-info small{color:#8fa39a;font-size:.72rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .chip{font-family:var(--mono);font-size:.66rem;padding:5px 10px;border-radius:999px;white-space:nowrap}
   .chip-fwd{background:rgba(33,192,99,.18);color:#8ee0b4}
   .chip-block{background:rgba(224,164,154,.15);color:#e5a397}
@@ -233,8 +239,8 @@
   .ava-good{background:rgba(33,192,99,.18)}
   .ava-bad{background:rgba(224,164,154,.15)}
   .ticker-foot{
-    margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);
-    font-size:.82rem;color:#8fa39a;display:flex;justify-content:space-between;
+    margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);
+    font-size:.78rem;color:#8fa39a;display:flex;justify-content:space-between;
   }
   .ticker-foot b{color:#6fd9a4;font-family:var(--mono);font-weight:500}
 
@@ -724,7 +730,7 @@
     <div class="rev" style="text-align:center">
       <span class="eyebrow" style="justify-content:center" data-i18n="priceEyebrow">Simple pricing</span>
       <h2 data-i18n="priceH2">Less than one missed job costs you.</h2>
-      <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup, and it's fully refundable if you're not satisfied by the end of your trial.</p>
+      <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup.</p>
     </div>
     <div class="price-grid three">
       <div class="plan rev">
@@ -766,7 +772,7 @@
         <a href="payment.html?plan=premium" class="btn btn-ghost" data-i18n="planCta3">Start free trial</a>
       </div>
     </div>
-    <p class="sub" style="text-align:center;margin:26px auto 0" data-i18n="setupNote">Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours. Refundable during your trial · Waived for founding clients with code FOUNDER.</p>
+    <p class="sub" style="text-align:center;margin:26px auto 0" data-i18n="setupNote">Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours.</p>
   </div>
 </section>
 
@@ -793,7 +799,7 @@
     <h2 data-i18n="closerH2">The next call could be your best customer. Answer it every time.</h2>
     <p data-i18n="closerP">Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.</p>
     <a href="#pricing" class="btn btn-green" style="font-size:1.08rem;padding:17px 38px" data-i18n="closerCta">Start your free trial</a>
-    <p class="fine" data-i18n="closerFine">7-day service trial · $99 setup, refundable in your first week · Cancel anytime</p>
+    <p class="fine" data-i18n="closerFine">7-day service trial · $99 one-time setup · Cancel anytime</p>
   </div>
 </section>
 
@@ -863,7 +869,7 @@ const I18N = {
     q3:'"Set it up on a Sunday night in about ten minutes. Monday morning it screened a telemarketer and forwarded a new client back to back. It paid for the month before lunch."',
     q3who:"Bright Path Tutoring",
     priceEyebrow:"Simple pricing", priceH2:"Less than one missed job costs you.",
-    priceSub:"Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup, and it's fully refundable if you're not satisfied by the end of your trial.",
+    priceSub:"Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup.",
     plan1h:"Starter", plan1for:"For one owner, one line", perMonth1:"/month", perMonth2:"/month", perMonth3:"/month",
     p1f1:"~300 call minutes included", p1f2:"24/7 answering, screening & spam blocking",
     p1f3:"WhatsApp summaries & alerts", p1f4:"Keep your existing number",
@@ -874,7 +880,7 @@ const I18N = {
     plan3h:"Premium", plan3for:"For maximum coverage",
     p3f1:"Everything in Growth, higher volume", p3f2:"Knowledge base: agent answers from your menu, price list & FAQ",
     p3f3:"Priority same-day changes", p3f4:"Monthly performance & tuning call",
-    setupNote:"Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours. Refundable during your trial · Waived for founding clients with code FOUNDER.",
+    setupNote:"Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours.",
     affEyebrow:"Partner program", affH2:"Know business owners? Earn every month they stay.",
     affSub:"Earn <b>20% recurring commission</b> on every business you refer, paid monthly for their first <b>12 months</b>. Apply below — approved partners receive a personal tracking link by email.",
     affName:"Your name", affEmail:"Email address", affCta:"Request an invite",
@@ -883,7 +889,7 @@ const I18N = {
     closerH2:"The next call could be your best customer. Answer it every time.",
     closerP:"Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.",
     closerCta:"Start your free trial",
-    closerFine:"7-day service trial · $99 setup, refundable in your first week · Cancel anytime",
+    closerFine:"7-day service trial · $99 one-time setup · Cancel anytime",
     footCopy:"© 2026 Umbrella Dynamics™ · A PMC Group LLC brand. Calls covered.",
     footDemo:"Demo", footHow:"How it works", footPricing:"Pricing", footPrivacy:"Privacy", footTerms:"Terms",
     // dynamic strings
@@ -937,7 +943,7 @@ const I18N = {
     q3:'"Lo configuré un domingo por la noche en unos diez minutos. El lunes por la mañana filtró a un vendedor y me transfirió un cliente nuevo, uno tras otro. Se pagó el mes antes del almuerzo."',
     q3who:"Bright Path Tutoring",
     priceEyebrow:"Precios simples", priceH2:"Menos de lo que te cuesta un trabajo perdido.",
-    priceSub:"Todos los planes comienzan con una prueba de servicio de 7 días — la facturación mensual comienza el día 8. La configuración única de $99 se paga al registrarte, y es totalmente reembolsable si no estás satisfecho al final de tu prueba.",
+    priceSub:"Todos los planes comienzan con una prueba de servicio de 7 días — la facturación mensual comienza el día 8. La configuración única de $99 se paga al registrarte.",
     plan1h:"Inicial", plan1for:"Para un dueño, una línea", perMonth1:"/mes", perMonth2:"/mes", perMonth3:"/mes",
     p1f1:"~300 minutos de llamadas incluidos", p1f2:"Respuesta, filtrado y bloqueo de spam 24/7",
     p1f3:"Resúmenes y alertas por WhatsApp", p1f4:"Conserva tu número actual",
@@ -948,7 +954,7 @@ const I18N = {
     plan3h:"Premium", plan3for:"Para cobertura máxima",
     p3f1:"Todo lo de Crecimiento, mayor volumen", p3f2:"Base de conocimiento: el agente responde desde tu menú, lista de precios y FAQ",
     p3f3:"Cambios prioritarios el mismo día", p3f4:"Llamada mensual de rendimiento y ajustes",
-    setupNote:"Tu configuración de $99 es un entregable, no un cargo: agente construido, WhatsApp conectado, saludo ajustado — todo hecho por ti en 48 horas. Reembolsable durante tu prueba · Gratis para clientes fundadores con el código FOUNDER.",
+    setupNote:"Tu configuración de $99 es un entregable, no un cargo: agente construido, WhatsApp conectado, saludo ajustado — todo hecho por ti en 48 horas.",
     affEyebrow:"Programa de socios", affH2:"¿Conoces dueños de negocios? Gana cada mes que permanezcan.",
     affSub:"Gana una <b>comisión recurrente del 20%</b> por cada negocio que refieras, pagada mensualmente durante sus primeros <b>12 meses</b>. Solicita abajo — los socios aprobados reciben su enlace personal de seguimiento por correo.",
     affName:"Tu nombre", affEmail:"Correo electrónico", affCta:"Solicitar invitación",
@@ -957,7 +963,7 @@ const I18N = {
     closerH2:"La próxima llamada podría ser tu mejor cliente. Contéstala siempre.",
     closerP:"Configúralo esta noche en diez minutos. Mañana por la mañana, el spam habrá desaparecido y cada cliente real llegará a ti.",
     closerCta:"Comienza tu prueba gratis",
-    closerFine:"Prueba de servicio de 7 días · Configuración de $99, reembolsable en tu primera semana · Cancela cuando quieras",
+    closerFine:"Prueba de servicio de 7 días · Configuración única de $99 · Cancela cuando quieras",
     footCopy:"© 2026 Umbrella Dynamics™ · Una marca de PMC Group LLC. Llamadas cubiertas.",
     footDemo:"Demo", footHow:"Cómo funciona", footPricing:"Precios", footPrivacy:"Privacidad", footTerms:"Términos",
     statusReady:"Llamada entrante · listo para contestar",
