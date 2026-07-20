@@ -209,39 +209,34 @@
 
   /* ---------- hero ticker card ---------- */
   .ticker-card{
-    background:var(--surface);border:1px solid var(--line);border-radius:24px;
-    box-shadow:var(--shadow-lg);padding:26px;
-    max-width:420px;margin-left:auto;
+    background:#0a0d10;color:#e7eee9;border:none;border-radius:32px;
+    box-shadow:none;padding:52px 22px 22px;
+    max-width:100%;margin:0;
   }
   .ticker-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-  .ticker-head .label{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
-  .live-dot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.74rem;color:var(--teal)}
-  [data-theme="dark"] .live-dot{color:#6fd9a4}
+  .ticker-head .label{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#8fa39a}
+  .live-dot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.72rem;color:#6fd9a4}
   .live-dot::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(33,192,99,.5)}50%{box-shadow:0 0 0 7px rgba(33,192,99,0)}}
-  .call-row{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:14px;animation:rowIn .5s ease both}
-  .call-row + .call-row{border-top:1px dashed var(--line)}
+  .call-row{display:flex;align-items:center;gap:13px;padding:12px 8px;border-radius:14px;animation:rowIn .5s ease both}
+  .call-row + .call-row{border-top:1px solid rgba(255,255,255,.06)}
   .call-row:nth-child(2){animation-delay:.25s}.call-row:nth-child(3){animation-delay:.5s}.call-row:nth-child(4){animation-delay:.75s}
   @keyframes rowIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  .call-ava{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:1.1rem}
+  .call-ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:1rem}
   .call-info{flex:1;min-width:0}
-  .call-info b{display:block;font-size:.94rem;font-weight:600}
-  .call-info small{color:var(--ink-soft);font-size:.8rem}
-  .chip{font-family:var(--mono);font-size:.68rem;padding:5px 11px;border-radius:999px;white-space:nowrap}
-  .chip-fwd{background:rgba(33,192,99,.15);color:#137a42}
-  [data-theme="dark"] .chip-fwd{color:#6fd9a4}
-  .chip-block{background:var(--chip-bad-bg);color:var(--chip-bad-fg)}
-  .chip-msg{background:var(--mist);color:var(--teal)}
-  [data-theme="dark"] .chip-msg{color:#8fc7b6}
-  .ava-good{background:rgba(33,192,99,.16)}
-  .ava-bad{background:var(--chip-bad-bg)}
+  .call-info b{display:block;font-size:.9rem;font-weight:600;color:#e7eee9}
+  .call-info small{color:#8fa39a;font-size:.76rem}
+  .chip{font-family:var(--mono);font-size:.66rem;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .chip-fwd{background:rgba(33,192,99,.18);color:#8ee0b4}
+  .chip-block{background:rgba(224,164,154,.15);color:#e5a397}
+  .chip-msg{background:rgba(255,255,255,.08);color:#a8bfb2}
+  .ava-good{background:rgba(33,192,99,.18)}
+  .ava-bad{background:rgba(224,164,154,.15)}
   .ticker-foot{
-    margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
-    font-size:.85rem;color:var(--ink-soft);display:flex;justify-content:space-between;
+    margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);
+    font-size:.82rem;color:#8fa39a;display:flex;justify-content:space-between;
   }
-  .ticker-foot b{color:var(--teal);font-family:var(--mono);font-weight:500}
-  [data-theme="dark"] .ticker-foot b{color:#6fd9a4}
-  @media(max-width:900px){.ticker-card{margin:0 auto}}
+  .ticker-foot b{color:#6fd9a4;font-family:var(--mono);font-weight:500}
 
   /* ---------- demo ---------- */
   .demo{background:linear-gradient(180deg,var(--mist) 0%,var(--cloud) 100%);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -257,17 +252,61 @@
   .demo-note{font-size:.85rem;color:var(--ink-soft);display:flex;align-items:center;gap:8px;margin-top:14px}
   .demo-note svg{flex:none}
 
+  /* ---------- phone-frame: shimmering metallic ring around any phone ---------- */
+  .phone-frame{
+    position:relative;
+    padding:14px;
+    border-radius:56px;
+    display:block;
+    width:100%;
+    max-width:380px;
+    margin:0 auto;
+  }
+  /* the shimmering metallic ring (conic gradient, rotates) */
+  .phone-frame::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;padding:5px;
+    background:conic-gradient(from 0deg,
+      #21c063 0%, #d4e9dc 8%, #e8f5ec 14%,
+      #21c063 22%, #17a552 32%, #a8bfb2 42%,
+      #e8f5ec 50%, #21c063 60%, #d4e9dc 70%,
+      #17a552 82%, #e8f5ec 92%, #21c063 100%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    animation:phoneShimmerRing 6s linear infinite;
+    z-index:2;
+    pointer-events:none;
+  }
+  /* soft green glow bleeding outside the ring */
+  .phone-frame::after{
+    content:"";position:absolute;inset:-14px;border-radius:inherit;z-index:0;
+    background:radial-gradient(closest-side,rgba(33,192,99,.35) 0%,rgba(33,192,99,.15) 45%,transparent 75%);
+    animation:phoneShimmerGlow 4.5s ease-in-out infinite alternate;
+    pointer-events:none;
+  }
+  @keyframes phoneShimmerRing{to{transform:rotate(360deg)}}
+  @keyframes phoneShimmerGlow{from{opacity:.6}to{opacity:1}}
+  @media(prefers-reduced-motion:reduce){
+    .phone-frame::before{animation:none}
+    .phone-frame::after{animation:none;opacity:.75}
+  }
+  /* dynamic island (notch) */
+  .phone-notch{
+    position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:96px;height:24px;background:#000;border-radius:20px;z-index:6;
+    box-shadow:inset 0 0 0 1px #2a2f36;
+  }
   .phone{
-    width:min(360px,100%);margin:0 auto;background:var(--surface);
-    border-radius:38px;position:relative;
-    border:1px solid #3a3f45;
+    width:100%;margin:0 auto;background:#0a0d10;
+    border-radius:42px;position:relative;
+    border:2px solid #2a2f36;
     box-shadow:
-      var(--shadow-phone),
-      inset 0 0 0 3px #0c0e10,
-      inset 0 0 0 5px #4a5058,
-      inset 0 0 0 7px #15181b,
-      inset 0 0 0 8px rgba(255,255,255,.08);
+      0 30px 60px rgba(0,0,0,.55),
+      inset 0 0 0 2px #050708,
+      inset 0 0 0 3px #3a4048,
+      inset 0 0 25px rgba(0,0,0,.6);
     overflow:hidden;
+    z-index:3;
   }
   .phone::after{
     content:"";position:absolute;top:-30%;bottom:-30%;width:34%;left:-60%;
@@ -281,15 +320,11 @@
     background:linear-gradient(115deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.03) 22%,transparent 40%);
   }
   @media(prefers-reduced-motion:reduce){.phone::after{animation:none;display:none}}
-  .phone-top{background:linear-gradient(180deg,#23272c 0%,#15181b 100%);color:#fff;padding:22px 20px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .phone-top{background:linear-gradient(180deg,#0f1216 0%,#0a0d10 100%);color:#fff;padding:52px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.06)}
   .agent-ava{width:44px;height:44px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--green),#7be0a8);display:grid;place-items:center}
   .phone-top b{display:block;font-size:.98rem;font-weight:600}
   .phone-status{font-family:var(--mono);font-size:.72rem;opacity:.85}
-  .phone-body{
-    height:340px;overflow-y:auto;padding:18px 16px;
-    background:radial-gradient(circle at 20% 20%, rgba(33,192,99,.06), transparent 45%), var(--mist);
-    display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;
-  }
+  .phone-body{padding:18px 20px 22px;min-height:260px;color:#e7eee9;background:#0a0d10;font-size:.92rem;line-height:1.55}
   .bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:.88rem;line-height:1.45;animation:bubIn .3s ease both}
   @keyframes bubIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
   .bub-agent{background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px;align-self:flex-start}
@@ -302,7 +337,7 @@
   [data-theme="dark"] .bub-sys.good{color:#6fd9a4}
   .bub-sys.bad{border-color:var(--chip-bad-fg);color:var(--chip-bad-fg);background:var(--chip-bad-bg)}
   .bub-who{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:3px}
-  .phone-dock{padding:16px;border-top:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:14px}
+  .phone-dock{padding:16px;border-top:1px solid rgba(255,255,255,.08);background:#0a0d10;display:flex;align-items:center;gap:14px}
   .play-btn{
     width:56px;height:56px;border-radius:50%;border:none;flex:none;cursor:pointer;
     background:var(--green);color:#fff;display:grid;place-items:center;
@@ -354,10 +389,11 @@
   .quote-who{display:flex;align-items:center;gap:12px;margin-top:auto}
   .photo-slot{
     width:64px;height:64px;border-radius:50%;flex:none;position:relative;overflow:hidden;
-    border:2px dashed #9aa8a0;background:var(--mist);display:grid;place-items:center;
+    border:2px solid rgba(33,192,99,.4);background:var(--mist);display:grid;place-items:center;
+    box-shadow:0 4px 12px rgba(6,63,53,.15);
   }
-  .photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
-  .photo-slot .ph-label{font-size:.5rem;line-height:1.25;text-align:center;color:var(--soft);font-weight:600;padding:2px}
+  .photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:2}
+  .photo-slot .ph-label{font-size:.5rem;line-height:1.25;text-align:center;color:var(--soft);font-weight:600;padding:2px;z-index:1}
   .quote-ava{width:42px;height:42px;border-radius:50%;flex:none;font-weight:600;color:#fff;display:grid;place-items:center;font-size:.9rem}
   .quote-who b{display:block;font-size:.9rem}
   .quote-who small{color:var(--ink-soft);font-size:.8rem}
@@ -464,6 +500,9 @@
       </div>
     </div>
 
+    <div class="phone-frame">
+    <div class="phone">
+    <span class="phone-notch"></span>
     <aside class="ticker-card" aria-label="Example of today's screened calls">
       <div class="ticker-head">
         <span class="label" data-i18n="tickerLabel">Today's calls</span>
@@ -493,6 +532,8 @@
         <span data-i18n="tickerFoot">Time saved today</span><b>47 min</b>
       </div>
     </aside>
+    </div>
+    </div>
   </div>
 </header>
 
@@ -514,7 +555,9 @@
     </div>
 
     <div class="rev">
+      <div class="phone-frame">
       <div class="phone" aria-live="polite">
+        <span class="phone-notch"></span>
         <div class="phone-top">
           <img class="agent-logo" alt="" style="width:46px;height:46px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))">
           <div>
@@ -531,6 +574,7 @@
           <div class="wave" id="wave" aria-hidden="true"></div>
           <span class="dock-time" id="dockTime">0:00</span>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -611,7 +655,7 @@
         <span class="stars">★★★★★</span>
         <p data-i18n="q1">"I'm under a sink half the day. Now my phone only rings when it's an actual customer, and I get a WhatsApp telling me who it is before I even pick up. I've stopped losing jobs to voicemail."</p>
         <div class="quote-who">
-          <span class="photo-slot"><img src="testimonial-1.jpg" alt="" onerror="this.style.display='none'"><span class="ph-label">PHOTO<br>testimonial-1.jpg<br>400&times;400</span></span>
+          <span class="photo-slot"><img src="testimonial-1.jpg" alt="Photo — Keller Plumbing" onerror="this.style.display='none'"><span class="ph-label">KP</span></span>
           <div><b>Dana K.</b><small data-i18n="q1who">Owner, Keller Plumbing</small></div>
         </div>
       </div>
@@ -619,7 +663,7 @@
         <span class="stars">★★★★★</span>
         <p data-i18n="q2">"The spam blocking alone is worth it. I was getting eight or nine junk calls a day. It's been three weeks and I haven't heard a single robocall. My clients say the agent sounds genuinely friendly."</p>
         <div class="quote-who">
-          <span class="photo-slot"><img src="testimonial-2.jpg" alt="" onerror="this.style.display='none'"><span class="ph-label">PHOTO<br>testimonial-2.jpg<br>400&times;400</span></span>
+          <span class="photo-slot"><img src="testimonial-2.jpg" alt="Photo — Marcus" onerror="this.style.display='none'"><span class="ph-label">M</span></span>
           <div><b>Marcus T.</b><small data-i18n="q2who">Torres Landscape Design</small></div>
         </div>
       </div>
@@ -627,7 +671,7 @@
         <span class="stars">★★★★★</span>
         <p data-i18n="q3">"Set it up on a Sunday night in about ten minutes. Monday morning it screened a telemarketer and forwarded a new client back to back. It paid for the month before lunch."</p>
         <div class="quote-who">
-          <span class="photo-slot"><img src="testimonial-3.jpg" alt="" onerror="this.style.display='none'"><span class="ph-label">PHOTO<br>testimonial-3.jpg<br>400&times;400</span></span>
+          <span class="photo-slot"><img src="testimonial-3.jpg" alt="Photo — Aisha" onerror="this.style.display='none'"><span class="ph-label">A</span></span>
           <div><b>Aisha B.</b><small data-i18n="q3who">Bright Path Tutoring</small></div>
         </div>
       </div>
