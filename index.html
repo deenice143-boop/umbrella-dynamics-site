@@ -50,14 +50,23 @@
     --shadow-phone: 0 30px 70px rgba(0,0,0,.55);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  /* metallic page frame */
+  /* metallic page frame — locked to largest viewport so the border
+     doesn't shift when the mobile URL bar shows/hides during scroll */
   body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:200;
+    content:"";position:fixed;
+    top:0;left:0;right:0;
+    height:100vh;              /* fallback for older browsers */
+    height:100lvh;             /* modern: largest viewport height, doesn't resize with URL bar */
+    pointer-events:none;z-index:200;
     border:7px solid transparent;
     border-image:linear-gradient(135deg,#1a1d21 0%,#8b939c 18%,#e8ecf0 32%,#5a626b 48%,#c8ced4 62%,#23262b 80%,#9aa2ab 100%) 1;
   }
   body::after{
-    content:"";position:fixed;inset:7px;pointer-events:none;z-index:200;
+    content:"";position:fixed;
+    top:7px;left:7px;right:7px;
+    height:calc(100vh - 14px);
+    height:calc(100lvh - 14px);
+    pointer-events:none;z-index:200;
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.35), inset 0 0 22px rgba(0,0,0,.28);
   }
 
