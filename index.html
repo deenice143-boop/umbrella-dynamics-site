@@ -805,7 +805,7 @@
 
 <footer>
   <div class="wrap foot-inner">
-    <span data-i18n="footCopy">© 2026 Umbrella Dynamics™ · A PMC Group LLC brand. Calls covered.</span>
+    <span data-i18n="footCopy">© 2026 Umbrella Dynamics™ · Calls covered.</span>
     <span><a href="#demo" data-i18n="footDemo">Demo</a> &nbsp;·&nbsp; <a href="#how" data-i18n="footHow">How it works</a> &nbsp;·&nbsp; <a href="#pricing" data-i18n="footPricing">Pricing</a> &nbsp;·&nbsp; <a href="privacy.html" data-i18n="footPrivacy">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" data-i18n="footTerms">Terms</a></span>
   </div>
 </footer>
@@ -890,7 +890,7 @@ const I18N = {
     closerP:"Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.",
     closerCta:"Start your free trial",
     closerFine:"7-day service trial · $99 one-time setup · Cancel anytime",
-    footCopy:"© 2026 Umbrella Dynamics™ · A PMC Group LLC brand. Calls covered.",
+    footCopy:"© 2026 Umbrella Dynamics™ · Calls covered.",
     footDemo:"Demo", footHow:"How it works", footPricing:"Pricing", footPrivacy:"Privacy", footTerms:"Terms",
     // dynamic strings
     statusReady:"Incoming call · ready to answer",
@@ -964,7 +964,7 @@ const I18N = {
     closerP:"Configúralo esta noche en diez minutos. Mañana por la mañana, el spam habrá desaparecido y cada cliente real llegará a ti.",
     closerCta:"Comienza tu prueba gratis",
     closerFine:"Prueba de servicio de 7 días · Configuración única de $99 · Cancela cuando quieras",
-    footCopy:"© 2026 Umbrella Dynamics™ · Una marca de PMC Group LLC. Llamadas cubiertas.",
+    footCopy:"© 2026 Umbrella Dynamics™ · Llamadas cubiertas.",
     footDemo:"Demo", footHow:"Cómo funciona", footPricing:"Precios", footPrivacy:"Privacidad", footTerms:"Términos",
     statusReady:"Llamada entrante · listo para contestar",
     statusOnCall:"En llamada · filtrando",
@@ -1167,7 +1167,7 @@ if (affForm) affForm.addEventListener('submit', async (e) => {
   const email = document.getElementById('affEmailIn').value.trim();
   btn.disabled = true; btn.style.opacity = .6;
   try {
-    const r = await fetch('https://formsubmit.co/ajax/pmcgroupllc@protonmail.com', {
+    const r = await fetch('https://formsubmit.co/ajax/info@getumbrelladynamics.com', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: JSON.stringify({ name, email,
@@ -1184,8 +1184,8 @@ if (affForm) affForm.addEventListener('submit', async (e) => {
     msg.innerHTML = (lang === 'es'
       ? 'No se pudo enviar automáticamente — escríbenos a '
       : 'Automatic send failed — email us directly at ')
-      + '<a href="mailto:pmcgroupllc@protonmail.com?subject=Affiliate%20application&body=' 
-      + encodeURIComponent('Name: ' + name + '\nEmail: ' + email) + '">pmcgroupllc@protonmail.com</a>';
+      + '<a href="mailto:info@getumbrelladynamics.com?subject=Affiliate%20application&body=' 
+      + encodeURIComponent('Name: ' + name + '\nEmail: ' + email) + '">info@getumbrelladynamics.com</a>';
     btn.disabled = false; btn.style.opacity = 1;
   }
 });
