@@ -169,11 +169,18 @@ const CONFIG = {
     premium: ""
   },
 
-  // --- Pricing per language. Both currently USD; to show a different
-  //     currency on the Spanish page, change sym/code/amounts for "es". ---
+  // --- Pricing per currency. USD is the actual Stripe charge amount;
+  //     other currencies are display-only (customer sees local price,
+  //     but Stripe charges the USD equivalent — disclosure at checkout). ---
   pricing: {
-    en: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 },
-    es: { sym:"$", code:"USD", starter:99, growth:149, premium:249, setup:99 }
+    USD: { sym:"$", code:"", starter:99, growth:149, premium:249, setup:99 },
+    MXN: { sym:"$", code:" MXN", starter:1499, growth:2499, premium:3999, setup:1499 },
+    COP: { sym:"$", code:" COP", starter:299000, growth:499000, premium:799000, setup:299000 },
+    CLP: { sym:"$", code:" CLP", starter:69000, growth:119000, premium:199000, setup:69000 },
+    PEN: { sym:"S/ ", code:"", starter:279, growth:469, premium:749, setup:279 },
+    PYG: { sym:"₲ ", code:"", starter:549000, growth:899000, premium:1499000, setup:549000 },
+    UYU: { sym:"$", code:" UYU", starter:2990, growth:4990, premium:7990, setup:2990 },
+    BRL: { sym:"R$ ", code:"", starter:449, growth:749, premium:1199, setup:449 }
   }
 };
 const PLANS = {
@@ -211,8 +218,11 @@ const plan = PLANS[params.get("plan")] ? params.get("plan") : "growth";
 function render(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const v = I18N[lang][el.dataset.i18n]; if(v!==undefined) el.innerHTML=v;});
-  const P = CONFIG.pricing[lang];
-  const codeTag = P.code === "USD" ? "" : " " + P.code;
+  const currency = new URLSearchParams(location.search).get('cur')
+                || (typeof localStorage!=='undefined' && localStorage.getItem('ud_currency'))
+                || 'USD';
+  const P = CONFIG.pricing[currency] || CONFIG.pricing.USD;
+  const codeTag = P.code;
   document.getElementById("planName").textContent = PLANS[plan][lang];
   document.getElementById("planPrice").textContent = P.sym + P[plan] + codeTag;
   document.getElementById("setupPrice").textContent = P.sym + P.setup + codeTag;

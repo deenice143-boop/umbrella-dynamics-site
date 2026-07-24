@@ -444,6 +444,20 @@
   .quote-who b{display:block;font-size:.9rem}
   .quote-who small{color:var(--ink-soft);font-size:.8rem}
 
+  /* --- currency + language selector --- */
+  .currency-select{
+    max-width:640px;margin:28px auto 0;text-align:center;
+    display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+    font-size:.9rem;
+  }
+  .currency-select label{color:var(--ink-soft);font-weight:500}
+  .currency-select select{
+    padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);
+    background:var(--surface);color:var(--ink);font-family:inherit;font-size:.92rem;
+    cursor:pointer;font-weight:500;
+  }
+  .currency-select select:hover{border-color:var(--green)}
+  .currency-note{font-size:.75rem;color:var(--ink-soft);width:100%;margin-top:6px;font-style:italic}
   /* ---------- pricing ---------- */
   .pricing{background:var(--mist);border-top:1px solid var(--line)}
   .price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,420px));gap:24px;justify-content:center;margin-top:52px}
@@ -511,6 +525,7 @@
         <select class="lang-select" id="langSelect" aria-label="Language">
           <option value="en">EN</option>
           <option value="es">ES</option>
+          <option value="pt">PT</option>
         </select>
       </span>
       <button class="tool-btn" id="themeBtn" aria-label="Toggle light and dark theme">
@@ -537,7 +552,7 @@
       </div>
       <div class="wa-note rev">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Z" fill="#21c063"/><path d="M8.5 7.5c.2-.5.5-.5.8-.5h.6c.2 0 .4 0 .6.5s.7 1.8.8 1.9c.1.2.1.3 0 .5-.1.2-.2.4-.4.6-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2 1.2.9 2 1.1 2.3 1.2.3.1.5.1.6-.1s.7-.8.9-1.1c.2-.3.4-.2.6-.1l1.7.8c.2.1.4.2.4.3 0 .2 0 .8-.3 1.5-.3.7-1.6 1.4-2.2 1.4-.6.1-1.3.3-4-.9a13 13 0 0 1-4.7-4.2c-.4-.5-1.1-1.6-1.1-2.8 0-1.2.6-1.8.8-2.1Z" fill="#fff"/></svg>
-        <span data-i18n="waNote">Built primarily for <b>WhatsApp Business</b> account holders — don't have one yet? We set it up for you during onboarding.</span>
+        <span data-i18n="waNote">Works on your <b>WhatsApp Business</b> number <b>or</b> your regular business phone line — we set it up either way during onboarding.</span>
       </div>
       <div class="trust-row">
         <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="trust1">No new number needed</span></span>
@@ -741,11 +756,25 @@
       <h2 data-i18n="priceH2">Less than one missed job costs you.</h2>
       <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup.</p>
     </div>
+    <div class="currency-select">
+      <label for="currencyPicker" data-i18n="currencyLabel">Show prices in:</label>
+      <select id="currencyPicker" onchange="updateCurrency(this.value)">
+        <option value="USD">🇺🇸 US Dollar — USD</option>
+        <option value="MXN">🇲🇽 Peso Mexicano — MXN</option>
+        <option value="COP">🇨🇴 Peso Colombiano — COP</option>
+        <option value="CLP">🇨🇱 Peso Chileno — CLP</option>
+        <option value="PEN">🇵🇪 Sol Peruano — PEN</option>
+        <option value="PYG">🇵🇾 Guaraní Paraguayo — PYG</option>
+        <option value="UYU">🇺🇾 Peso Uruguayo — UYU</option>
+        <option value="BRL">🇧🇷 Real Brasileiro — BRL</option>
+      </select>
+      <span class="currency-note" id="currencyNote"></span>
+    </div>
     <div class="price-grid three">
       <div class="plan rev">
         <h3 data-i18n="plan1h">Starter</h3>
         <p class="for" data-i18n="plan1for">For one owner, one line</p>
-        <div class="price">$99<small data-i18n="perMonth1">/month</small></div>
+        <div class="price"><span data-price="starter">$99</span><small data-i18n="perMonth1">/month</small></div>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f1">~300 call minutes included</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f2">24/7 answering, screening &amp; spam blocking</span></li>
@@ -758,7 +787,7 @@
         <span class="hot-tag" data-i18n="hotTag">Most popular</span>
         <h3 data-i18n="plan2h">Growth</h3>
         <p class="for" data-i18n="plan2for">For busy shops and crews</p>
-        <div class="price">$149<small data-i18n="perMonth2">/month</small></div>
+        <div class="price"><span data-price="growth">$149</span><small data-i18n="perMonth2">/month</small></div>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f1">~600 call minutes included</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f2">Bilingual agent — auto-detects English &amp; Spanish</span></li>
@@ -771,7 +800,7 @@
       <div class="plan rev">
         <h3 data-i18n="plan3h">Premium</h3>
         <p class="for" data-i18n="plan3for">For maximum coverage</p>
-        <div class="price">$249<small data-i18n="perMonth3">/month</small></div>
+        <div class="price"><span data-price="premium">$249</span><small data-i18n="perMonth3">/month</small></div>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p3f1">Everything in Growth, higher volume</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p3f2">Knowledge base: agent answers from your menu, price list &amp; FAQ</span></li>
@@ -839,7 +868,7 @@ const I18N = {
     navDemo:"Hear it live", navHow:"How it works", navPricing:"Pricing", navCta:"Start free trial",
     heroEyebrow:"AI call screening for small business",
     heroH1:'Never miss a <em>real customer</em> again.',
-    heroSub:"Your Umbrella agent answers every call, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — delivered through WhatsApp, so it works with the phone already in your pocket.",
+    heroSub:"Your Umbrella agent answers every call, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — through WhatsApp or your regular business phone line, with the phone already in your pocket.",
     ctaTrial:"Start your free trial", ctaHear:"Hear a live call",
     trust1:"No new number needed", trust2:"Set up in 10 minutes", trust3:"Cancel anytime",
     tickerLabel:"Today's calls", tickerLive:"agent on duty",
@@ -907,13 +936,14 @@ const I18N = {
     statusDoneReal:"Customer forwarded ✓", statusDoneSpam:"Spam blocked ✓",
     pressPlay:"Press play to answer the incoming call",
     whoAgent:"Umbrella agent", whoCaller:"Caller",
-    ariaPlay:"Play demo call", ariaStop:"Stop demo call"
+    ariaPlay:"Play demo call", ariaStop:"Stop demo call",
+    currencyLabel:"Show prices in:"
   },
   es: {
     navDemo:"Escúchalo en vivo", navHow:"Cómo funciona", navPricing:"Precios", navCta:"Prueba gratis",
     heroEyebrow:"Filtrado de llamadas con IA para pequeños negocios",
     heroH1:'No vuelvas a perder un <em>cliente real</em>.',
-    heroSub:"Tu agente Umbrella contesta cada llamada, filtra el spam y las llamadas automáticas en segundos, y transfiere a los clientes genuinos directamente a ti — todo a través de WhatsApp, con el teléfono que ya llevas en el bolsillo.",
+    heroSub:"Tu agente Umbrella contesta cada llamada, filtra el spam y las llamadas automáticas en segundos, y transfiere a los clientes genuinos directamente a ti — por WhatsApp o por tu línea telefónica de negocio, con el teléfono que ya llevas en el bolsillo.",
     ctaTrial:"Comienza tu prueba gratis", ctaHear:"Escucha una llamada real",
     trust1:"Sin número nuevo", trust2:"Listo en 10 minutos", trust3:"Cancela cuando quieras",
     tickerLabel:"Llamadas de hoy", tickerLive:"agente en servicio",
@@ -968,7 +998,7 @@ const I18N = {
     affSub:"Gana una <b>comisión recurrente del 20%</b> por cada negocio que refieras, pagada mensualmente durante sus primeros <b>12 meses</b>. Solicita abajo — los socios aprobados reciben su enlace personal de seguimiento por correo.",
     affName:"Tu nombre", affEmail:"Correo electrónico", affCta:"Solicitar invitación",
     affFine:"Revisamos cada solicitud personalmente — los socios aprobados reciben su enlace de referido por correo en 2 días hábiles.",
-    waNote:"Diseñado principalmente para titulares de cuentas de <b>WhatsApp Business</b> — ¿aún no tienes una? La configuramos por ti durante el registro.",
+    waNote:"Funciona en tu número de <b>WhatsApp Business</b> <b>o</b> en tu línea telefónica de negocio normal — lo configuramos como prefieras durante el registro.",
     closerH2:"La próxima llamada podría ser tu mejor cliente. Contéstala siempre.",
     closerP:"Configúralo esta noche en diez minutos. Mañana por la mañana, el spam habrá desaparecido y cada cliente real llegará a ti.",
     closerCta:"Comienza tu prueba gratis",
@@ -980,7 +1010,82 @@ const I18N = {
     statusDoneReal:"Cliente transferido ✓", statusDoneSpam:"Spam bloqueado ✓",
     pressPlay:"Pulsa play para contestar la llamada entrante",
     whoAgent:"Agente Umbrella", whoCaller:"Llamante",
-    ariaPlay:"Reproducir llamada de demostración", ariaStop:"Detener llamada de demostración"
+    ariaPlay:"Reproducir llamada de demostración", ariaStop:"Detener llamada de demostración",
+    currencyLabel:"Mostrar precios en:"
+  },
+  pt: {
+    navDemo:"Ouça ao vivo", navHow:"Como funciona", navPricing:"Preços", navCta:"Teste grátis",
+    heroEyebrow:"Triagem de chamadas com IA para pequenos negócios",
+    heroH1:'Nunca mais perca um <em>cliente de verdade</em>.',
+    heroSub:"Seu agente Umbrella atende cada chamada, filtra spam e chamadas automáticas em segundos, e transfere clientes genuínos direto para você — pelo WhatsApp ou pela sua linha telefônica comum, com o telefone que já está no seu bolso.",
+    ctaTrial:"Comece seu teste grátis", ctaHear:"Ouça uma chamada real",
+    trust1:"Sem número novo", trust2:"Configurado em 10 minutos", trust3:"Cancele quando quiser",
+    tickerLabel:"Chamadas de hoje", tickerLive:"agente em serviço",
+    t1b:"Sarah M. — orçamento novo", t1s:'"Preciso revisar minhas calhas esta semana"',
+    t2b:"Desconhecido — robochamada", t2s:"Gravação de garantia automotiva detectada",
+    t3b:"Miguel R. — cliente habitual", t3s:'"Retornando sobre a fatura de terça"',
+    t4b:"Desconhecido — telemarketing", t4s:"Venda em massa de serviços de SEO",
+    chipFwd:"transferida", chipFwd2:"transferida", chipBlock:"bloqueada", chipMsg:"anotou recado",
+    tickerFoot:"Tempo economizado hoje",
+    demoEyebrow:"Ouça você mesmo",
+    demoH2:"Assim seu agente atende uma chamada real.",
+    demoSub:"Aperte play e ouça como o agente Umbrella cumprimenta quem liga, entende o que precisa e toma a decisão certa: transferir o cliente ou encerrar o spam. Cada palavra abaixo acontece exatamente igual em uma linha real.",
+    tabReal:"Cliente real", tabSpam:"Chamada spam",
+    demoNote:"Aumente o volume — o agente fala em voz alta em dispositivos compatíveis.",
+    howEyebrow:"Como funciona", howH2:"Três passos. Dez minutos. Pronto.",
+    step1tag:"PASSO 1", step2tag:"PASSO 2", step3tag:"PASSO 3",
+    step1h:"Direcione suas chamadas para nós",
+    step1p:"Mantenha seu número atual. Um simples desvio envia as chamadas ao seu agente Umbrella — sem equipamentos novos, sem chip novo, sem apps para seus clientes aprenderem.",
+    step2h:"O agente atende e filtra",
+    step2p:"Cada chamada é atendida em dois toques, com uma voz natural e o nome do seu negócio. O agente pergunta o motivo, detecta robochamadas e vendas na hora, e verifica clientes reais.",
+    step3h:"Clientes reais chegam a você",
+    step3p:"Clientes genuínos são transferidos direto para seu telefone com um aviso pelo WhatsApp: quem ligou e por quê. Tudo mais vira um resumo que você lê quando quiser.",
+    beneEyebrow:"Por que os donos mudam",
+    beneH2:"Seu telefone se acalma.<br>Seu negócio cresce.",
+    bene1stat:"chamadas de spam", bene1h:"O spam para na porta",
+    bene1p:"Robochamadas, golpes de garantia e vendas frias nunca mais tocam seu telefone. O agente as identifica e dispensa em segundos — sempre com cortesia.",
+    bene2stat:"hs / semana", bene2h:"Você recupera seu tempo",
+    bene2p:"Pare de largar as ferramentas, sair de um serviço ou interromper uma reunião por uma chamada sem valor. Só passam as chamadas que importam.",
+    bene3h:"Nenhum cliente perdido",
+    bene3p:"Ocupado, fora do expediente ou em outra linha? O agente coleta os dados, agenda o retorno e envia um resumo — um toque perdido nunca mais será um trabalho perdido.",
+    quoteEyebrow:"De donos reais", quoteH2:"Pequenos negócios, grande diferença.",
+    q1:'"Passo metade do dia debaixo de uma pia. Agora meu telefone só toca quando é cliente de verdade, e recebo um WhatsApp dizendo quem é antes de atender. Parei de perder serviços por caixa postal."',
+    q1who:"Dona, Keller Plumbing",
+    q2:'"Só o bloqueio de spam já vale. Eu recebia oito ou nove chamadas de lixo por dia. Já se vão três semanas sem ouvir uma robochamada. Meus clientes dizem que o agente soa muito educado."',
+    q2who:"Torres Landscape Design",
+    q3:'"Configurei um domingo à noite em cerca de dez minutos. Segunda de manhã filtrou um vendedor e me transferiu um cliente novo, um atrás do outro. Se pagou antes do almoço."',
+    q3who:"Bright Path Tutoring",
+    priceEyebrow:"Preços simples", priceH2:"Menos do que custa um trabalho perdido.",
+    priceSub:"Todos os planos começam com um teste de serviço de 7 dias — a cobrança mensal começa no dia 8. Uma configuração única de $99 é cobrada na inscrição.",
+    plan1h:"Inicial", plan1for:"Para um dono, uma linha", perMonth1:"/mês", perMonth2:"/mês", perMonth3:"/mês",
+    p1f1:"~300 minutos de chamadas incluídos", p1f2:"Atendimento, triagem e bloqueio de spam 24/7",
+    p1f3:"Resumos e alertas pelo WhatsApp", p1f4:"Mantém seu número atual",
+    planCta1:"Teste grátis", planCta2:"Teste grátis", planCta3:"Teste grátis",
+    hotTag:"Mais popular", plan2h:"Crescimento", plan2for:"Para negócios e equipes movimentados",
+    p2f1:"~600 minutos de chamadas incluídos", p2f2:"Agente bilíngue — detecta inglês e espanhol automaticamente",
+    p2f3:"Saudação, perguntas e regras de chamada personalizadas", p2f4:"Transferência para até 5 membros da equipe", p2f5:"Ajuste pessoal durante seu teste",
+    plan3h:"Premium", plan3for:"Para cobertura máxima",
+    p3f1:"Tudo do Crescimento, maior volume", p3f2:"Base de conhecimento: o agente responde do seu cardápio, lista de preços e FAQ",
+    p3f3:"Mudanças prioritárias no mesmo dia", p3f4:"Chamada mensal de desempenho e ajustes",
+    setupNote:"Sua configuração de $99 é um entregável, não uma taxa: agente construído, WhatsApp conectado, saudação ajustada — tudo feito para você em 48 horas.",
+    affEyebrow:"Programa de parceiros", affH2:"Conhece donos de negócios? Ganhe todo mês que eles ficarem.",
+    affSub:"Ganhe uma <b>comissão recorrente de 20%</b> por cada negócio que indicar, paga mensalmente durante seus primeiros <b>12 meses</b>. Candidate-se abaixo — parceiros aprovados recebem seu link pessoal por email.",
+    affName:"Seu nome", affEmail:"Endereço de email", affCta:"Solicitar convite",
+    affFine:"Analisamos cada aplicação pessoalmente — parceiros aprovados recebem seu link em 2 dias úteis.",
+    waNote:"Funciona no seu número do <b>WhatsApp Business</b> <b>ou</b> na sua linha telefônica comercial comum — configuramos do jeito que preferir durante o cadastro.",
+    closerH2:"A próxima chamada pode ser seu melhor cliente. Atenda sempre.",
+    closerP:"Configure hoje à noite em dez minutos. Amanhã de manhã, o spam terá sumido e cada cliente real chegará até você.",
+    closerCta:"Comece seu teste grátis",
+    closerFine:"Teste de serviço de 7 dias · Configuração única de $99 · Cancele quando quiser",
+    footCopy:"© 2026 Umbrella Dynamics™ · Chamadas cobertas.",
+    footDemo:"Demo", footHow:"Como funciona", footPricing:"Preços", footPrivacy:"Privacidade", footTerms:"Termos",
+    statusReady:"Chamada recebida · pronto para atender",
+    statusOnCall:"Em chamada · filtrando",
+    statusDoneReal:"Cliente transferido ✓", statusDoneSpam:"Spam bloqueado ✓",
+    pressPlay:"Aperte play para atender a chamada",
+    whoAgent:"Agente Umbrella", whoCaller:"Chamador",
+    ariaPlay:"Reproduzir chamada de demonstração", ariaStop:"Parar chamada de demonstração",
+    currencyLabel:"Mostrar preços em:"
   }
 };
 
@@ -1027,6 +1132,27 @@ const SCRIPTS = {
       { t:'sysbad', txt:'✕ Llamada finalizada · número bloqueado · el dueño nunca fue molestado' },
       { t:'sysgood', txt:'Registrado en silencio — 0 segundos de tu tiempo' }
     ]
+  },
+  pt: {
+    real: [
+      { t:'sys',  txt:'Chamada recebida · atendida em 0:02' },
+      { t:'agent', txt:"Bom dia, você ligou para Keller Plumbing. Aqui é o assistente — em que posso ajudar hoje?" },
+      { t:'caller', txt:"Oi, sim — meu aquecedor de água está vazando e queria alguém aqui esta semana se possível." },
+      { t:'agent', txt:"Que pena — claro que podemos ajudar. Pode me dar seu nome para eu te passar direto para Dana?" },
+      { t:'caller', txt:"É Sarah Mitchell, da rua Elm." },
+      { t:'sysgood', txt:'✓ Verificado: cliente novo · reparo de aquecedor' },
+      { t:'agent', txt:"Obrigado, Sarah. Conectando você com Dana agora — ela vai atender já já." },
+      { t:'sysgood', txt:'→ Transferida ao dono · resumo enviado pelo WhatsApp' }
+    ],
+    spam: [
+      { t:'sys',  txt:'Chamada recebida · número desconhecido' },
+      { t:'agent', txt:"Bom dia, você ligou para Keller Plumbing. Aqui é o assistente — em que posso ajudar hoje?" },
+      { t:'caller', txt:"Estamos tentando falar com você sobre a garantia estendida do seu veículo—" },
+      { t:'sysbad', txt:'⚠ Correspondência: roteiro de robochamada detectado' },
+      { t:'agent', txt:"Esta linha é somente para clientes da Keller Plumbing. Por favor, remova este número da sua lista. Tchau." },
+      { t:'sysbad', txt:'✕ Chamada encerrada · número bloqueado · o dono nunca foi incomodado' },
+      { t:'sysgood', txt:'Registrado em silêncio — 0 segundos do seu tempo usados' }
+    ]
   }
 };
 
@@ -1046,6 +1172,9 @@ function setLang(l){
     const v = I18N[l][el.dataset.i18nPh];
     if (v !== undefined) el.placeholder = v;
   });
+  // refresh currency note in new language
+  const picker = document.getElementById('currencyPicker');
+  if (picker && typeof updateCurrency === 'function') updateCurrency(picker.value);
   stopDemo(true); // reset demo with translated placeholder + status
 }
 langSelect.addEventListener('change', e => setLang(e.target.value));
@@ -1209,6 +1338,48 @@ try {
     a.href += (a.href.includes('?') ? '&' : '?') + 'ref=' + encodeURIComponent(savedRef);
   });
 } catch (e) { /* storage unavailable (private mode) — degrade silently */ }
+
+/* ================ CURRENCY SYSTEM ================
+   Displays localized pricing for LatAm markets. Actual Stripe charge stays
+   in USD; local prices are for reference/comfort. Charge disclosure appears
+   at checkout. */
+const CURRENCIES = {
+  USD: {label:{en:"US Dollar",es:"Dólar estadounidense",pt:"Dólar americano"}, starter:{v:99, s:"$99"}, growth:{v:149, s:"$149"}, premium:{v:249, s:"$249"}, note:{en:"", es:"", pt:""}, usdApprox:1},
+  MXN: {label:{en:"Mexican Peso",es:"Peso Mexicano",pt:"Peso Mexicano"}, starter:{v:1499,s:"$1,499 MXN"}, growth:{v:2499,s:"$2,499 MXN"}, premium:{v:3999,s:"$3,999 MXN"}, note:{en:"Charged in USD equivalent at checkout (approx $75/$125/$200 USD).", es:"Cobrado en su equivalente en USD (aprox. $75/$125/$200 USD).", pt:"Cobrado em USD equivalente (aprox. $75/$125/$200 USD)."}, usdApprox:20},
+  COP: {label:{en:"Colombian Peso",es:"Peso Colombiano",pt:"Peso Colombiano"}, starter:{v:299000,s:"$299,000 COP"}, growth:{v:499000,s:"$499,000 COP"}, premium:{v:799000,s:"$799,000 COP"}, note:{en:"Charged in USD equivalent at checkout (approx $75/$125/$200 USD).", es:"Cobrado en su equivalente en USD (aprox. $75/$125/$200 USD).", pt:"Cobrado em USD equivalente."}, usdApprox:4000},
+  CLP: {label:{en:"Chilean Peso",es:"Peso Chileno",pt:"Peso Chileno"}, starter:{v:69000,s:"$69,000 CLP"}, growth:{v:119000,s:"$119,000 CLP"}, premium:{v:199000,s:"$199,000 CLP"}, note:{en:"Charged in USD equivalent at checkout (approx $73/$125/$210 USD).", es:"Cobrado en su equivalente en USD (aprox. $73/$125/$210 USD).", pt:"Cobrado em USD equivalente."}, usdApprox:950},
+  PEN: {label:{en:"Peruvian Sol",es:"Sol Peruano",pt:"Sol Peruano"}, starter:{v:279,s:"S/ 279"}, growth:{v:469,s:"S/ 469"}, premium:{v:749,s:"S/ 749"}, note:{en:"Charged in USD equivalent at checkout (approx $75/$125/$200 USD).", es:"Cobrado en su equivalente en USD (aprox. $75/$125/$200 USD).", pt:"Cobrado em USD equivalente."}, usdApprox:3.7},
+  PYG: {label:{en:"Paraguayan Guaraní",es:"Guaraní Paraguayo",pt:"Guarani Paraguaio"}, starter:{v:549000,s:"₲ 549,000"}, growth:{v:899000,s:"₲ 899,000"}, premium:{v:1499000,s:"₲ 1,499,000"}, note:{en:"Charged in USD equivalent at checkout (approx $73/$120/$200 USD).", es:"Cobrado en su equivalente en USD (aprox. $73/$120/$200 USD).", pt:"Cobrado em USD equivalente."}, usdApprox:7500},
+  UYU: {label:{en:"Uruguayan Peso",es:"Peso Uruguayo",pt:"Peso Uruguaio"}, starter:{v:2990,s:"$2,990 UYU"}, growth:{v:4990,s:"$4,990 UYU"}, premium:{v:7990,s:"$7,990 UYU"}, note:{en:"Charged in USD equivalent at checkout (approx $75/$125/$200 USD).", es:"Cobrado en su equivalente en USD (aprox. $75/$125/$200 USD).", pt:"Cobrado em USD equivalente."}, usdApprox:40},
+  BRL: {label:{en:"Brazilian Real",es:"Real Brasileño",pt:"Real Brasileiro"}, starter:{v:449,s:"R$ 449"}, growth:{v:749,s:"R$ 749"}, premium:{v:1199,s:"R$ 1,199"}, note:{en:"Charged in USD equivalent at checkout (approx $80/$135/$220 USD).", es:"Cobrado en su equivalente en USD (aprox. $80/$135/$220 USD).", pt:"Cobrado em USD equivalente (aprox. $80/$135/$220 USD)."}, usdApprox:5.5},
+};
+
+function updateCurrency(code){
+  const c = CURRENCIES[code] || CURRENCIES.USD;
+  document.querySelectorAll('[data-price]').forEach(el => {
+    const tier = el.dataset.price;
+    if (c[tier]) el.textContent = c[tier].s;
+  });
+  const note = document.getElementById('currencyNote');
+  if (note) note.textContent = c.note[lang] || c.note.en || '';
+  document.querySelectorAll('a[href^="payment.html"]').forEach(a => {
+    const url = new URL(a.href, location.origin);
+    url.searchParams.set('cur', code);
+    a.href = url.pathname + url.search;
+  });
+  try { localStorage.setItem('ud_currency', code); } catch(_){}
+}
+
+/* On load, restore any saved currency choice */
+(function(){
+  try {
+    const saved = localStorage.getItem('ud_currency');
+    if (saved && CURRENCIES[saved]){
+      const picker = document.getElementById('currencyPicker');
+      if (picker){ picker.value = saved; updateCurrency(saved); }
+    }
+  } catch(_){}
+})();
 </script>
 </body>
 </html>
