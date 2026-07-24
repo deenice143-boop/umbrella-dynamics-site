@@ -3,8 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Umbrella Dynamics — Never miss a real customer again</title>
-<meta name="description" content="An AI voice agent that answers, screens, and forwards your business calls. Spam blocked. Real customers reach you every time.">
+<title>Umbrella Dynamics — Never miss a real customer again · No pierdas un cliente real · Nunca perca um cliente</title>
+
+<!-- Primary metadata: trilingual so WhatsApp/Facebook/iMessage previews
+     read naturally in EN, ES, and PT shares. -->
+<meta name="description" content="AI phone answering for small business · Contestador con IA para pequeños negocios · Atendimento com IA para pequenos negócios. WhatsApp o teléfono normal. From $99/mo · Desde $99/mes.">
+
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn link previews) -->
+<meta property="og:title" content="Umbrella Dynamics · AI phone answering / Contestador con IA">
+<meta property="og:description" content="Your AI agent answers, screens spam, and forwards real customers — on WhatsApp or your regular business line. Available in English, Español, Português.">
+<meta property="og:url" content="https://getumbrelladynamics.com">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Umbrella Dynamics">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="es_MX">
+<meta property="og:locale:alternate" content="pt_BR">
+
+<!-- Twitter Card (also used by some messengers as a fallback) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Umbrella Dynamics · AI phone answering / Contestador con IA">
+<meta name="twitter:description" content="Your AI agent answers every call — WhatsApp or regular phone. EN · ES · PT. From $99/mo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Cinzel:wght@700&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -458,6 +477,12 @@
   }
   .currency-select select:hover{border-color:var(--green)}
   .currency-note{font-size:.75rem;color:var(--ink-soft);width:100%;margin-top:6px;font-style:italic}
+  .delivery-callout{
+    width:100%;margin-top:14px;padding:11px 18px;
+    background:rgba(33,192,99,.08);border:1px solid rgba(33,192,99,.3);border-radius:14px;
+    font-size:.86rem;color:var(--ink);text-align:center;line-height:1.45;
+  }
+  .delivery-callout b{color:var(--teal);font-weight:600}
   /* ---------- pricing ---------- */
   .pricing{background:var(--mist);border-top:1px solid var(--line)}
   .price-grid{display:grid;grid-template-columns:repeat(2,minmax(0,420px));gap:24px;justify-content:center;margin-top:52px}
@@ -769,6 +794,9 @@
         <option value="BRL">🇧🇷 Real Brasileiro — BRL</option>
       </select>
       <span class="currency-note" id="currencyNote"></span>
+      <div class="delivery-callout">
+        <span data-i18n="deliveryCallout">Works on your WhatsApp Business number <b>or</b> your regular business phone line — we set it up either way, at the same price.</span>
+      </div>
     </div>
     <div class="price-grid three">
       <div class="plan rev">
@@ -937,7 +965,8 @@ const I18N = {
     pressPlay:"Press play to answer the incoming call",
     whoAgent:"Umbrella agent", whoCaller:"Caller",
     ariaPlay:"Play demo call", ariaStop:"Stop demo call",
-    currencyLabel:"Show prices in:"
+    currencyLabel:"Show prices in:",
+    deliveryCallout:"Works on your WhatsApp Business number <b>or</b> your regular business phone line — we set it up either way, at the same price."
   },
   es: {
     navDemo:"Escúchalo en vivo", navHow:"Cómo funciona", navPricing:"Precios", navCta:"Prueba gratis",
@@ -1011,7 +1040,8 @@ const I18N = {
     pressPlay:"Pulsa play para contestar la llamada entrante",
     whoAgent:"Agente Umbrella", whoCaller:"Llamante",
     ariaPlay:"Reproducir llamada de demostración", ariaStop:"Detener llamada de demostración",
-    currencyLabel:"Mostrar precios en:"
+    currencyLabel:"Mostrar precios en:",
+    deliveryCallout:"Funciona en tu número de <b>WhatsApp Business</b> <b>o</b> en tu línea telefónica de negocio normal — lo configuramos como prefieras, al mismo precio."
   },
   pt: {
     navDemo:"Ouça ao vivo", navHow:"Como funciona", navPricing:"Preços", navCta:"Teste grátis",
@@ -1085,7 +1115,8 @@ const I18N = {
     pressPlay:"Aperte play para atender a chamada",
     whoAgent:"Agente Umbrella", whoCaller:"Chamador",
     ariaPlay:"Reproduzir chamada de demonstração", ariaStop:"Parar chamada de demonstração",
-    currencyLabel:"Mostrar preços em:"
+    currencyLabel:"Mostrar preços em:",
+    deliveryCallout:"Funciona no seu número do <b>WhatsApp Business</b> <b>ou</b> na sua linha telefônica comercial comum — configuramos do jeito que preferir, pelo mesmo preço."
   }
 };
 
