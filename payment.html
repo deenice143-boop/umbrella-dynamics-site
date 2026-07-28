@@ -100,7 +100,7 @@
   <span class="langs"><a id="len" class="active">EN</a><a id="les">ES</a></span>
 </div>
 
-<div class="demo-banner" data-i18n="banner">⚠ Demo checkout — no real payments are processed yet. Live billing launches with Stripe soon.</div>
+<div class="demo-banner" data-i18n="banner">⚠ Test mode — this checkout uses Stripe's test environment. No real charges are made. Use test card 4242 4242 4242 4242, any future date, any CVC.</div>
 
 <div class="card">
   <h1 data-i18n="h1">Start your 7-day trial</h1>
@@ -116,37 +116,19 @@
 </div>
 
 <div class="card">
-  <h1 style="font-size:1.15rem" data-i18n="payTitle">Payment method</h1>
-  <div class="pm-tabs">
-    <div class="pm active" data-pm="card" onclick="pickPm(this)">💳 <span data-i18n="pmCard">Card</span></div>
-    <div class="pm" data-pm="paypal" onclick="pickPm(this)">PayPal</div>
-    <div class="pm" data-pm="wallet" onclick="pickPm(this)">Apple / Google</div>
-    
+  <h1 style="font-size:1.15rem" data-i18n="payTitle">Ready to check out?</h1>
+  <p class="sub" data-i18n="paySub">Payment happens on Stripe's secure checkout page — the industry standard used by millions of businesses. You'll enter your card details there.</p>
+
+  <div class="pay-methods">
+    <span class="pm-badge">💳 <span data-i18n="pmCard">Card</span></span>
+    <span class="pm-badge">PayPal</span>
+    <span class="pm-badge"> Pay</span>
+    <span class="pm-badge">G Pay</span>
   </div>
 
-  <div class="pm-panel active" id="pm-card">
-    <label data-i18n="cardName">Name on card</label>
-    <input placeholder="Dana Keller">
-    <label data-i18n="cardNum">Card number</label>
-    <input placeholder="4242 4242 4242 4242" inputmode="numeric">
-    <div class="row2">
-      <div><label data-i18n="cardExp">Expiry</label><input placeholder="MM / YY"></div>
-      <div><label>CVC</label><input placeholder="123" inputmode="numeric"></div>
-    </div>
-    <button class="btn btn-green btn-full" onclick="mockPay()" data-i18n="startTrial">Pay setup &amp; start trial</button>
-  </div>
+  <button class="btn btn-green btn-full" onclick="mockPay()" data-i18n="continueBtn" style="margin-top:20px;font-size:1.05rem;padding:16px">Continue to secure checkout →</button>
 
-  <div class="pm-panel" id="pm-paypal">
-    <button class="wallet-btn paypal" onclick="mockPay()"><i>Pay</i>Pal — <span data-i18n="continueW">Continue</span></button>
-  </div>
-
-  <div class="pm-panel" id="pm-wallet">
-    <button class="wallet-btn apple" onclick="mockPay()"> Pay — <span data-i18n="continueW">Continue</span></button>
-    <button class="wallet-btn google" onclick="mockPay()">G Pay — <span data-i18n="continueW">Continue</span></button>
-  </div>
-
-  <div class="ok-msg" id="okMsg" data-i18n="okMsg">✓ Demo complete — in the live version, this is where your trial begins.</div>
-  <p class="fine" data-i18n="secure">🔒 Payments will be processed securely by Stripe · Cancel anytime</p>
+  <p class="fine" data-i18n="secure" style="margin-top:12px">🔒 Payments processed securely by Stripe · Cancel anytime</p>
 </div>
 
 <div class="card" style="text-align:center">
@@ -162,12 +144,12 @@
 /* ================= UMBRELLA DYNAMICS CHECKOUT CONFIG =================
    Everything adjustable lives here. Edit values, re-upload, done.       */
 const CONFIG = {
-  // --- Stripe Payment Links: paste each plan link URL when created.
-  //     While empty, buttons stay in demo mode. ---
+  // --- Stripe Payment Links (TEST MODE — swap for live URLs after
+  //     account verification). Test cards: 4242 4242 4242 4242 works. ---
   stripeLinks: {
-    starter: "",
-    growth:  "",
-    premium: ""
+    starter: "https://buy.stripe.com/test_aFaaEW0VLg8Z8xO8aZ2Ry00",
+    growth:  "https://buy.stripe.com/test_14AcN46g55ulcO4dvj2Ry01",
+    premium: "https://buy.stripe.com/test_4gMfZgeMB2i96pGezn2Ry02"
   },
 
   // --- Pricing per currency. USD is the actual Stripe charge amount;
@@ -191,24 +173,18 @@ const PLANS = {
 };
 
 const I18N = {
-  en:{banner:"⚠ Demo checkout — no real payments are processed yet. Live billing launches with Stripe soon.",
+  en:{banner:"⚠ Test mode — this checkout uses Stripe's test environment. No real charges are made. Use test card 4242 4242 4242 4242, any future date, any CVC.",
       h1:"Start your 7-day service trial",
       sub:"Today covers your one-time setup — we build, connect, and tune your agent within 48 hours. Monthly billing starts on day 8. You can cancel anytime.",
       planLbl:"Plan",monthly:"Monthly price (starts day 8, after your trial)",setup:"One-time setup (due today)",dueToday:"Due today",afterTrial:"7-day service trial · monthly billing begins on day 8.",
-      payTitle:"Payment method",pmCard:"Card",
-      cardName:"Name on card",cardNum:"Card number",cardExp:"Expiry",
-      startTrial:"Pay setup & start trial",continueW:"Continue",
-      okMsg:"✓ Demo complete — live payments arrive with Stripe. Next step: <a href='onboard.html'>complete your onboarding</a>.",
+      payTitle:"Ready to check out?", paySub:"Payment happens on Stripe's secure checkout page — the industry standard used by millions of businesses. You'll enter your card details there.", continueBtn:"Continue to secure checkout →",
       secure:"🔒 Payments will be processed securely by Stripe · Cancel anytime",
       back:"← Back to Umbrella Dynamics"},
-  es:{banner:"⚠ Pago de demostración — aún no se procesan pagos reales. La facturación llega pronto con Stripe.",
+  es:{banner:"⚠ Modo de prueba — este pago usa el entorno de pruebas de Stripe. No se cobra dinero real. Usa la tarjeta de prueba 4242 4242 4242 4242, cualquier fecha futura, cualquier CVC.",
       h1:"Comienza tu prueba de servicio de 7 días",
       sub:"Hoy cubres la configuración única — construimos, conectamos y ajustamos tu agente en 48 horas. La facturación mensual comienza el día 8. Puedes cancelar cuando quieras.",
       planLbl:"Plan",monthly:"Precio mensual (comienza el día 8, tras tu prueba)",setup:"Configuración única (a pagar hoy)",dueToday:"A pagar hoy",afterTrial:"Prueba de servicio de 7 días · facturación mensual comienza el día 8.",
-      payTitle:"Método de pago",pmCard:"Tarjeta",
-      cardName:"Nombre en la tarjeta",cardNum:"Número de tarjeta",cardExp:"Vence",
-      startTrial:"Pagar configuración y comenzar",continueW:"Continuar",
-      okMsg:"✓ Demostración completa — los pagos reales llegan con Stripe. Siguiente paso: <a href='onboard.html'>completa tu registro</a>.",
+      payTitle:"¿Listo para pagar?", paySub:"El pago se procesa en la página segura de Stripe — el estándar de la industria usado por millones de negocios. Ingresa los datos de tu tarjeta ahí.", continueBtn:"Continuar al pago seguro →",
       secure:"🔒 Los pagos serán procesados de forma segura por Stripe · Cancela cuando quieras",
       back:"← Volver a Umbrella Dynamics"}
 };
@@ -262,7 +238,14 @@ try {
   if (r) localStorage.setItem("ud_ref", r.slice(0,40));
 } catch(e){}
 if (CONFIG.stripeLinks.starter || CONFIG.stripeLinks.growth || CONFIG.stripeLinks.premium){
-  document.querySelector(".demo-banner").style.display = "none";
+  // Only hide the demo banner when we're using LIVE-mode Stripe links.
+  // Test-mode links contain "test_" in the URL — banner stays visible so
+  // no visitor mistakes a test checkout for real payment.
+  const anyLive = [CONFIG.stripeLinks.starter, CONFIG.stripeLinks.growth, CONFIG.stripeLinks.premium]
+    .some(url => url && !url.includes("/test_"));
+  if (anyLive) {
+    document.querySelector(".demo-banner").style.display = "none";
+  }
 }
 render();
 </script>
