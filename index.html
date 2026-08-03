@@ -678,6 +678,19 @@
     display:grid;place-items:center;flex:none;font-size:1.05rem;color:var(--green);
   }
   @media(max-width:640px){.contact-btn{width:100%;justify-content:flex-start}}
+  /* ---------- FAQ ---------- */
+  .faq-band{padding:80px 0;background:linear-gradient(180deg,transparent 0%,rgba(33,192,99,.03) 50%,transparent 100%)}
+  .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{background:var(--surface);border:1px solid var(--line);border-radius:14px;transition:border-color .2s}
+  .faq-item:hover{border-color:rgba(33,192,99,.4)}
+  .faq-item[open]{border-color:var(--green)}
+  .faq-item summary{padding:20px 24px;cursor:pointer;font-family:var(--disp);font-weight:600;font-size:1.05rem;color:var(--ink);list-style:none;position:relative;padding-right:56px}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--green);font-weight:400;transition:transform .2s}
+  .faq-item[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  .faq-item p{padding:0 24px 22px;color:var(--ink-soft);line-height:1.65;font-size:.98rem}
+  @media(max-width:520px){.faq-item summary{padding:16px 20px;padding-right:48px;font-size:.98rem} .faq-item p{padding:0 20px 18px;font-size:.94rem}}
+
   /* ---------- closer ---------- */
   .closer{
     background:radial-gradient(ellipse 700px 400px at 50% 120%, rgba(33,192,99,.25), transparent 65%), var(--teal);
@@ -740,7 +753,7 @@
     <div>
       <span class="eyebrow" data-i18n="heroEyebrow">AI call screening for small business</span>
       <h1 data-i18n="heroH1">Never miss a <em>real customer</em> again.</h1>
-      <p class="sub" data-i18n="heroSub">Your Umbrella agent answers every call on your business phone line, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — no new number needed, no app for your customers to install, just calls handled the way they should be.</p>
+      <p class="sub" data-i18n="heroSub">Your Umbrella agent answers every call on your business phone line, screens out spam and robocalls in seconds, and captures the details from genuine customers so nothing important slips through — no new number needed, no app for your customers to install.</p>
       <div class="hero-ctas">
         <a href="#pricing" class="btn btn-green"><span data-i18n="ctaTrial">Start your 7-day trial</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -909,8 +922,8 @@
         <div class="step-ico">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2.05Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
         </div>
-        <h3 data-i18n="step3h">Real callers reach you</h3>
-        <p data-i18n="step3p">Genuine customers are forwarded straight to your phone with a heads-up on WhatsApp: who's calling and why. Everything else becomes a tidy message summary you can read when it suits you.</p>
+        <h3 data-i18n="step3h">Real callers get properly captured</h3>
+        <p data-i18n="step3p">Genuine customers get a professional greeting, and the agent captures their name, callback number, and reason for calling. Every conversation is transcribed in full for you to review — nothing important slips through.</p>
       </div>
     </div>
   </div>
@@ -937,7 +950,7 @@
       <div class="bene rev">
         <div class="bene-stat">100<small>%</small></div>
         <h3 data-i18n="bene3h">Every lead captured</h3>
-        <p data-i18n="bene3p">Busy, off the clock, or on another line? The agent takes the details, books the callback, and sends you a summary — so a missed ring is never a missed job.</p>
+        <p data-i18n="bene3p">Busy, off the clock, or on another line? The agent takes the details, captures the callback number, and saves a full transcript — so a missed ring is never a missed job.</p>
       </div>
     </div>
   </div>
@@ -982,7 +995,7 @@
     <div class="rev" style="text-align:center">
       <span class="eyebrow" style="justify-content:center" data-i18n="priceEyebrow">Simple pricing</span>
       <h2 data-i18n="priceH2">Less than one missed job costs you.</h2>
-      <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup.</p>
+      <p class="sub" style="margin:16px auto 0" data-i18n="priceSub">Every plan starts with a 7-day trial — monthly billing begins on day 8. Cancel anytime before then, no charge.</p>
     </div>
     <div class="currency-select">
       <label for="currencyPicker" data-i18n="currencyLabel">Show prices in:</label>
@@ -1009,7 +1022,7 @@
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f1">~300 call minutes included</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f2">24/7 answering, screening &amp; spam blocking</span></li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f3">WhatsApp summaries &amp; alerts</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f3">Full transcripts saved in your dashboard</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p1f4">Keep your existing number</span></li>
         </ul>
         <a href="payment.html?plan=starter" class="btn btn-ghost" data-i18n="planCta1">Start 7-day trial</a>
@@ -1023,7 +1036,7 @@
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f1">~600 call minutes included</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f2">Bilingual agent — auto-detects English &amp; Spanish</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f3">Custom greeting, questions &amp; call rules</span></li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f4">Forward to up to 5 team members</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f4">Multi-team-member routing (coming soon)</span></li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#21c063" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="p2f5">Personal tuning during your trial</span></li>
         </ul>
         <a href="payment.html?plan=growth" class="btn btn-green" data-i18n="planCta2">Start 7-day trial</a>
@@ -1041,7 +1054,7 @@
         <a href="payment.html?plan=premium" class="btn btn-ghost" data-i18n="planCta3">Start 7-day trial</a>
       </div>
     </div>
-    <p class="sub" style="text-align:center;margin:26px auto 0" data-i18n="setupNote">Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours.</p>
+    <p class="sub" style="text-align:center;margin:26px auto 0" data-i18n="setupNote">Every plan includes a 7-day trial. No charge until day 8. Cancel anytime before then, no questions asked.</p>
   </div>
 </section>
 
@@ -1099,19 +1112,41 @@
   </div>
 </section>
 
+<!-- ============ FAQ ============ -->
+<section id="faq" class="faq-band">
+  <div class="wrap">
+    <div class="rev" style="text-align:center;margin-bottom:36px">
+      <span class="eyebrow" data-i18n="faqEyebrow">Common questions</span>
+      <h2 data-i18n="faqH2">What Umbrella does today — and what's next.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item"><summary data-i18n="faqQ1">Can the AI answer calls in my customer's language?</summary><p data-i18n="faqA1">Yes. Lisa, our AI agent, handles English, Spanish, and Portuguese natively — she detects the caller's language and responds in kind. This works today, on every call.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ2">Does it forward calls to my personal phone in real time?</summary><p data-i18n="faqA2">Not yet — this is on our roadmap. Today, the AI takes a message: the caller's name, callback number, and reason for calling. You'll get a full transcript. Live call transfer to your cell is coming in the next few weeks.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ3">Will I get a text summary of each call?</summary><p data-i18n="faqA3">Automatic SMS or WhatsApp summaries are coming soon. Today, every call is transcribed in full and stored in your dashboard for you to review anytime. We're working on push notifications so you'll know the moment a real customer calls.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ4">Can it make outbound calls to follow up with leads?</summary><p data-i18n="faqA4">Not in the current version. Umbrella today handles inbound calls — answering, screening spam, and capturing messages. Outbound calling is planned but we recommend using it once we've proven the inbound experience serves your business well.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ5">Can it book appointments in my calendar?</summary><p data-i18n="faqA5">Calendar integration (Google Calendar, Calendly, others) is on the roadmap. For now, when a caller wants to book, the AI captures their preferred time and contact info, and you follow up. We built this way so we could ship a reliable core service first before adding complexity.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ6">Does it integrate with my CRM?</summary><p data-i18n="faqA6">Not today. CRM integrations (HubSpot, Zoho, others) are planned. Right now, transcripts and caller info are available in your Umbrella dashboard — you can copy them into your CRM manually until the integration ships.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ7">Can I customize what the AI says on calls?</summary><p data-i18n="faqA7">Yes. During setup, we tune the greeting, the questions the AI asks callers, and how it handles common scenarios for your business. Changes take effect immediately — no waiting for redeployment.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ8">What happens after hours or when I'm on vacation?</summary><p data-i18n="faqA8">The AI answers 24/7 — same voice, same screening, same message-taking, whether it's 2 PM or 2 AM. Real callers get a professional experience, and you review their messages when you're back at your phone.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ9">Can it collect payment info or take orders?</summary><p data-i18n="faqA9">No — and by design. Reading credit card numbers over an AI phone line raises real security and compliance concerns (PCI-DSS). For payment collection, the AI directs callers to your website or sends them a payment link via text.</p></details>
+      <details class="faq-item"><summary data-i18n="faqQ10">What if I want a feature that isn't listed here?</summary><p data-i18n="faqA10">Ask us. We're actively shaping the product based on what small business owners actually need. Email <a href="mailto:info@getumbrelladynamics.com" style="color:var(--green);font-weight:600">info@getumbrelladynamics.com</a> or call our demo line — if it's a request we hear from several customers, it moves up the roadmap fast.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="closer">
   <div class="wrap rev">
     <h2 data-i18n="closerH2">The next call could be your best customer. Answer it every time.</h2>
     <p data-i18n="closerP">Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.</p>
     <a href="#pricing" class="btn btn-green" style="font-size:1.08rem;padding:17px 38px" data-i18n="closerCta">Start your 7-day trial</a>
-    <p class="fine" data-i18n="closerFine">7-day service trial · $99 one-time setup · Cancel anytime</p>
+    <p class="fine" data-i18n="closerFine">7-day trial · No setup fee · Cancel anytime</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-inner">
     <span data-i18n="footCopy">© 2026 Umbrella Dynamics™ · Calls covered.</span>
-    <span class="foot-nav"><a href="#demo" data-i18n="footDemo">Demo</a> &nbsp;·&nbsp; <a href="#how" data-i18n="footHow">How it works</a> &nbsp;·&nbsp; <a href="#pricing" data-i18n="footPricing">Pricing</a> &nbsp;·&nbsp; <a href="#contact" data-i18n="footContact">Contact</a> &nbsp;·&nbsp; <a href="privacy.html" data-i18n="footPrivacy">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" data-i18n="footTerms">Terms</a></span>
+    <span class="foot-nav"><a href="#demo" data-i18n="footDemo">Demo</a> &nbsp;·&nbsp; <a href="#how" data-i18n="footHow">How it works</a> &nbsp;·&nbsp; <a href="#pricing" data-i18n="footPricing">Pricing</a> &nbsp;·&nbsp; <a href="#faq" data-i18n="footFaq">FAQ</a> &nbsp;·&nbsp; <a href="#contact" data-i18n="footContact">Contact</a> &nbsp;·&nbsp; <a href="privacy.html" data-i18n="footPrivacy">Privacy</a> &nbsp;·&nbsp; <a href="terms.html" data-i18n="footTerms">Terms</a></span>
     <span class="foot-mail"><a href="mailto:info@getumbrelladynamics.com">info@getumbrelladynamics.com</a></span>
   </div>
 </footer>
@@ -1136,7 +1171,7 @@ const I18N = {
     navDemo:"Hear it live", navHow:"How it works", navPricing:"Pricing", navCta:"Start 7-day trial",
     heroEyebrow:"AI call screening for small business",
     heroH1:'Never miss a <em>real customer</em> again.',
-    heroSub:"Your Umbrella agent answers every call on your business phone line, screens out spam and robocalls in seconds, and forwards genuine customers straight to you — no new number needed, no app for your customers to install, just calls handled the way they should be.",
+    heroSub:"Your Umbrella agent answers every call on your business phone line, screens out spam and robocalls in seconds, and captures the details from genuine customers so nothing important slips through — no new number needed, no app for your customers to install.",
     ctaTrial:"Start your 7-day trial", ctaHear:"Hear a live call",
     trust1:"No new number needed", trust2:"Set up in 10 minutes", trust3:"Cancel anytime",
     tickerLabel:"Today's calls", tickerLive:"agent on duty",
@@ -1157,8 +1192,8 @@ const I18N = {
     step1p:"Keep your existing business number. One simple forwarding setting sends incoming calls to your Umbrella agent — no new hardware, no new SIM, no app for your customers to learn.",
     step2h:"The agent answers & screens",
     step2p:"Every call is answered in two rings, in a natural voice with your business name. The agent asks what the call is about, spots robocalls and sales pitches instantly, and verifies real customers.",
-    step3h:"Real callers reach you",
-    step3p:"Genuine customers are forwarded straight to your phone with a heads-up on WhatsApp: who's calling and why. Everything else becomes a tidy message summary you can read when it suits you.",
+    step3h:"Real callers get properly captured",
+    step3p:"Genuine customers get a professional greeting, and the agent captures their name, callback number, and reason for calling. Every conversation is transcribed in full for you to review — nothing important slips through.",
     beneEyebrow:"Why owners switch",
     beneH2:"Your phone goes quiet.<br>Your business gets louder.",
     bene1stat:"spam calls", bene1h:"Spam stops at the door",
@@ -1166,7 +1201,7 @@ const I18N = {
     bene2stat:"Hours back to you", bene2h:"Your time comes back",
     bene2p:"Stop dropping your tools, stepping off a job, or interrupting a client meeting for a call that turns out to be nothing. Only calls worth taking get through.",
     bene3h:"Every lead captured",
-    bene3p:"Busy, off the clock, or on another line? The agent takes the details, books the callback, and sends you a summary — so a missed ring is never a missed job.",
+    bene3p:"Busy, off the clock, or on another line? The agent takes the details, captures the callback number, and saves a full transcript — so a missed ring is never a missed job.",
     quoteEyebrow:"Who Umbrella is for", quoteH2:"The small business owners we built this for.",
     who1title:"Plomeros y contratistas de servicios en casa", who1sub:"Operadores independientes, en trabajos todo el día",
     who1desc:"Bajo un fregadero o en una escalera medio día. Cada llamada podría ser una emergencia real — o una estafa de garantía más. Necesita que el teléfono solo suene cuando realmente importe.",
@@ -1175,18 +1210,18 @@ const I18N = {
     who3title:"Educadores, coaches y consultores independientes", who3sub:"Negocios de una sola persona",
     who3desc:"Sin personal para contestar el teléfono. Necesita una voz profesional que salude, filtre y capture clientes serios para devolver la llamada mientras corren las clases o sesiones.",
     priceEyebrow:"Simple pricing", priceH2:"Less than one missed job costs you.",
-    priceSub:"Every plan starts with a 7-day service trial — monthly billing begins on day 8. A one-time $99 setup is due at signup.",
+    priceSub:"Every plan starts with a 7-day trial — monthly billing begins on day 8. Cancel anytime before then, no charge.",
     plan1h:"Starter", plan1for:"For one owner, one line", perMonth1:"/month", perMonth2:"/month", perMonth3:"/month",
     p1f1:"~300 call minutes included", p1f2:"24/7 answering, screening & spam blocking",
-    p1f3:"WhatsApp summaries & alerts", p1f4:"Keep your existing number",
+    p1f3:"Full transcripts saved in your dashboard", p1f4:"Keep your existing number",
     planCta1:"Start 7-day trial", planCta2:"Start 7-day trial", planCta3:"Start 7-day trial",
     hotTag:"Most popular", plan2h:"Growth", plan2for:"For busy shops and crews",
     p2f1:"~600 call minutes included", p2f2:"Bilingual agent — auto-detects English & Spanish",
-    p2f3:"Custom greeting, questions & call rules", p2f4:"Forward to up to 5 team members", p2f5:"Personal tuning during your trial",
+    p2f3:"Custom greeting, questions & call rules", p2f4:"Multi-team-member routing (coming soon)", p2f5:"Personal tuning during your trial",
     plan3h:"Premium", plan3for:"For maximum coverage",
     p3f1:"Everything in Growth, higher volume", p3f2:"Knowledge base: agent answers from your menu, price list & FAQ",
     p3f3:"Priority same-day changes", p3f4:"Monthly performance & tuning call",
-    setupNote:"Your $99 setup is a deliverable, not a fee: agent built, WhatsApp connected, greeting tuned — done for you within 48 hours.",
+    setupNote:"Every plan includes a 7-day trial. No charge until day 8. Cancel anytime before then, no questions asked.",
     affEyebrow:"Partner program", affH2:"Know business owners? Earn every month they stay.",
     affSub:"Earn <b>20% recurring commission</b> on every business you refer, paid monthly for their first <b>12 months</b>. Apply below — approved partners receive a personal tracking link by email.",
     affName:"Your name", affEmail:"Email address", affCta:"Request an invite",
@@ -1195,9 +1230,31 @@ const I18N = {
     closerH2:"The next call could be your best customer. Answer it every time.",
     closerP:"Set up in ten minutes tonight. By tomorrow morning, spam is gone and every real caller reaches you.",
     closerCta:"Start your 7-day trial",
-    closerFine:"7-day service trial · $99 one-time setup · Cancel anytime",
+    closerFine:"7-day trial · No setup fee · Cancel anytime",
+    faqEyebrow:"Common questions", faqH2:"What Umbrella does today — and what's next.",
+    faqQ1:"Can the AI answer calls in my customer's language?",
+    faqA1:"Yes. Lisa, our AI agent, handles English, Spanish, and Portuguese natively — she detects the caller's language and responds in kind. This works today, on every call.",
+    faqQ2:"Does it forward calls to my personal phone in real time?",
+    faqA2:"Not yet — this is on our roadmap. Today, the AI takes a message: the caller's name, callback number, and reason for calling. You'll get a full transcript. Live call transfer to your cell is coming in the next few weeks.",
+    faqQ3:"Will I get a text summary of each call?",
+    faqA3:"Automatic SMS or WhatsApp summaries are coming soon. Today, every call is transcribed in full and stored in your dashboard for you to review anytime. We're working on push notifications so you'll know the moment a real customer calls.",
+    faqQ4:"Can it make outbound calls to follow up with leads?",
+    faqA4:"Not in the current version. Umbrella today handles inbound calls — answering, screening spam, and capturing messages. Outbound calling is planned but we recommend using it once we've proven the inbound experience serves your business well.",
+    faqQ5:"Can it book appointments in my calendar?",
+    faqA5:"Calendar integration (Google Calendar, Calendly, others) is on the roadmap. For now, when a caller wants to book, the AI captures their preferred time and contact info, and you follow up. We built this way so we could ship a reliable core service first before adding complexity.",
+    faqQ6:"Does it integrate with my CRM?",
+    faqA6:"Not today. CRM integrations (HubSpot, Zoho, others) are planned. Right now, transcripts and caller info are available in your Umbrella dashboard — you can copy them into your CRM manually until the integration ships.",
+    faqQ7:"Can I customize what the AI says on calls?",
+    faqA7:"Yes. During setup, we tune the greeting, the questions the AI asks callers, and how it handles common scenarios for your business. Changes take effect immediately — no waiting for redeployment.",
+    faqQ8:"What happens after hours or when I'm on vacation?",
+    faqA8:"The AI answers 24/7 — same voice, same screening, same message-taking, whether it's 2 PM or 2 AM. Real callers get a professional experience, and you review their messages when you're back at your phone.",
+    faqQ9:"Can it collect payment info or take orders?",
+    faqA9:"No — and by design. Reading credit card numbers over an AI phone line raises real security and compliance concerns (PCI-DSS). For payment collection, the AI directs callers to your website or sends them a payment link via text.",
+    faqQ10:"What if I want a feature that isn't listed here?",
+    faqA10:"Ask us. We're actively shaping the product based on what small business owners actually need. Email <a href=\"mailto:info@getumbrelladynamics.com\" style=\"color:var(--green);font-weight:600\">info@getumbrelladynamics.com</a> or call our demo line — if it's a request we hear from several customers, it moves up the roadmap fast.",
     footCopy:"© 2026 Umbrella Dynamics™ · Calls covered.",
     footContact:"Contact",
+    footFaq:"FAQ",
     contactEyebrow:"Get in touch",
     contactH2:"Questions before you sign up? We're here.",
     contactP:"Reach us the way that works best for you — email lands in a real inbox we check every day, or WhatsApp us for a quick chat.",
@@ -1227,7 +1284,7 @@ const I18N = {
     navDemo:"Escúchalo en vivo", navHow:"Cómo funciona", navPricing:"Precios", navCta:"Prueba de 7 días",
     heroEyebrow:"Filtrado de llamadas con IA para pequeños negocios",
     heroH1:'No vuelvas a perder un <em>cliente real</em>.',
-    heroSub:"Tu agente Umbrella contesta cada llamada en tu línea telefónica de negocio, filtra el spam y las llamadas automáticas en segundos, y transfiere a los clientes genuinos directamente a ti — sin número nuevo, sin app para tus clientes, solo llamadas atendidas como deben ser.",
+    heroSub:"Tu agente Umbrella contesta cada llamada en tu línea telefónica de negocio, filtra el spam y las llamadas automáticas en segundos, y captura los datos de los clientes genuinos para que nada importante se pierda — sin número nuevo, sin app para tus clientes.",
     ctaTrial:"Comienza tu prueba de 7 días", ctaHear:"Escucha una llamada real",
     trust1:"Sin número nuevo", trust2:"Listo en 10 minutos", trust3:"Cancela cuando quieras",
     tickerLabel:"Llamadas de hoy", tickerLive:"agente en servicio",
@@ -1248,8 +1305,8 @@ const I18N = {
     step1p:"Conserva tu número de siempre. Un simple desvío envía las llamadas entrantes a tu agente Umbrella — sin equipos nuevos, sin SIM nueva, sin apps que tus clientes tengan que aprender.",
     step2h:"El agente contesta y filtra",
     step2p:"Cada llamada se contesta en dos tonos, con una voz natural y el nombre de tu negocio. El agente pregunta el motivo, detecta robollamadas y ventas al instante, y verifica a los clientes reales.",
-    step3h:"Los clientes reales llegan a ti",
-    step3p:"Los clientes genuinos se transfieren directo a tu teléfono con un aviso por WhatsApp: quién llama y por qué. Todo lo demás se convierte en un resumen que lees cuando te convenga.",
+    step3h:"Los clientes reales quedan bien atendidos",
+    step3p:"Los clientes genuinos reciben un saludo profesional, y el agente captura su nombre, número de devolución y motivo de la llamada. Cada conversación se transcribe completa para que la revises — nada importante se pierde.",
     beneEyebrow:"Por qué cambian los dueños",
     beneH2:"Tu teléfono se calma.<br>Tu negocio crece.",
     bene1stat:"llamadas spam", bene1h:"El spam se queda en la puerta",
@@ -1257,7 +1314,7 @@ const I18N = {
     bene2stat:"Horas para ti", bene2h:"Recuperas tu tiempo",
     bene2p:"Deja de soltar las herramientas, salir de un trabajo o interrumpir una reunión por una llamada que no vale nada. Solo pasan las llamadas que importan.",
     bene3h:"Ningún cliente perdido",
-    bene3p:"¿Ocupado, fuera de horario o en otra línea? El agente toma los datos, agenda la devolución de llamada y te envía un resumen — un timbre perdido nunca más será un trabajo perdido.",
+    bene3p:"¿Ocupado, fuera de horario o en otra línea? El agente toma los datos, captura el número para devolver la llamada y guarda una transcripción completa — un timbre perdido nunca más será un trabajo perdido.",
     quoteEyebrow:"Para quién es Umbrella", quoteH2:"Los dueños de pequeños negocios para quienes lo construimos.",
     who1title:"Plumbing & home service contractors", who1sub:"Solo operators, on jobs all day",
     who1desc:"Under a sink or on a ladder half the day. Every ring could be a real emergency — or another warranty scam. Needs the phone to only ring when it actually matters.",
@@ -1266,18 +1323,18 @@ const I18N = {
     who3title:"Solo educators, coaches & consultants", who3sub:"One-person businesses",
     who3desc:"No staff to answer the phone. Needs a professional voice that greets, screens, and captures serious leads for callback while classes or client sessions run.",
     priceEyebrow:"Precios simples", priceH2:"Menos de lo que te cuesta un trabajo perdido.",
-    priceSub:"Todos los planes comienzan con una prueba de servicio de 7 días — la facturación mensual comienza el día 8. La configuración única de $99 se paga al registrarte.",
+    priceSub:"Todos los planes comienzan con una prueba de 7 días — la facturación mensual comienza el día 8. Cancela cuando quieras antes, sin cargo.",
     plan1h:"Inicial", plan1for:"Para un dueño, una línea", perMonth1:"/mes", perMonth2:"/mes", perMonth3:"/mes",
     p1f1:"~300 minutos de llamadas incluidos", p1f2:"Respuesta, filtrado y bloqueo de spam 24/7",
-    p1f3:"Resúmenes y alertas por WhatsApp", p1f4:"Conserva tu número actual",
+    p1f3:"Transcripciones completas en tu panel", p1f4:"Conserva tu número actual",
     planCta1:"Prueba de 7 días", planCta2:"Prueba de 7 días", planCta3:"Prueba de 7 días",
     hotTag:"Más popular", plan2h:"Crecimiento", plan2for:"Para negocios y cuadrillas ocupados",
     p2f1:"~600 minutos de llamadas incluidos", p2f2:"Agente bilingüe — detecta inglés y español automáticamente",
-    p2f3:"Saludo, preguntas y reglas de llamada personalizados", p2f4:"Transferencia hasta 5 miembros del equipo", p2f5:"Ajuste personal durante tu prueba",
+    p2f3:"Saludo, preguntas y reglas de llamada personalizados", p2f4:"Ruteo a múltiples miembros del equipo (próximamente)", p2f5:"Ajuste personal durante tu prueba",
     plan3h:"Premium", plan3for:"Para cobertura máxima",
     p3f1:"Todo lo de Crecimiento, mayor volumen", p3f2:"Base de conocimiento: el agente responde desde tu menú, lista de precios y FAQ",
     p3f3:"Cambios prioritarios el mismo día", p3f4:"Llamada mensual de rendimiento y ajustes",
-    setupNote:"Tu configuración de $99 es un entregable, no un cargo: agente construido, WhatsApp conectado, saludo ajustado — todo hecho por ti en 48 horas.",
+    setupNote:"Todos los planes incluyen prueba de 7 días. Sin cargo hasta el día 8. Cancela cuando quieras antes, sin preguntas.",
     affEyebrow:"Programa de socios", affH2:"¿Conoces dueños de negocios? Gana cada mes que permanezcan.",
     affSub:"Gana una <b>comisión recurrente del 20%</b> por cada negocio que refieras, pagada mensualmente durante sus primeros <b>12 meses</b>. Solicita abajo — los socios aprobados reciben su enlace personal de seguimiento por correo.",
     affName:"Tu nombre", affEmail:"Correo electrónico", affCta:"Solicitar invitación",
@@ -1286,9 +1343,31 @@ const I18N = {
     closerH2:"La próxima llamada podría ser tu mejor cliente. Contéstala siempre.",
     closerP:"Configúralo esta noche en diez minutos. Mañana por la mañana, el spam habrá desaparecido y cada cliente real llegará a ti.",
     closerCta:"Comienza tu prueba de 7 días",
-    closerFine:"Prueba de servicio de 7 días · Configuración única de $99 · Cancela cuando quieras",
+    closerFine:"Prueba de 7 días · Sin costo de configuración · Cancela cuando quieras",
+    faqEyebrow:"Preguntas comunes", faqH2:"Qué hace Umbrella hoy — y qué viene después.",
+    faqQ1:"¿El agente contesta llamadas en el idioma de mi cliente?",
+    faqA1:"Sí. Lisa, nuestra agente IA, maneja inglés, español y portugués nativamente — detecta el idioma del que llama y responde en el mismo. Esto funciona hoy, en cada llamada.",
+    faqQ2:"¿Transfiere llamadas a mi teléfono personal en tiempo real?",
+    faqA2:"Todavía no — está en nuestro plan. Hoy, la IA toma un mensaje: nombre del que llama, número de devolución y motivo. Recibirás una transcripción completa. La transferencia en vivo llega en las próximas semanas.",
+    faqQ3:"¿Recibiré un resumen por texto de cada llamada?",
+    faqA3:"Los resúmenes automáticos por SMS o WhatsApp llegan pronto. Hoy, cada llamada se transcribe completa y se guarda en tu panel para que la revises cuando quieras.",
+    faqQ4:"¿Puede hacer llamadas salientes para hacer seguimiento a leads?",
+    faqA4:"No en la versión actual. Umbrella hoy maneja llamadas entrantes — contestando, filtrando spam y capturando mensajes. Las llamadas salientes están planeadas.",
+    faqQ5:"¿Puede agendar citas en mi calendario?",
+    faqA5:"La integración con calendarios (Google Calendar, Calendly, otros) está en el plan. Por ahora, cuando un cliente quiere agendar, la IA captura su horario preferido e información de contacto, y tú haces el seguimiento.",
+    faqQ6:"¿Se integra con mi CRM?",
+    faqA6:"Hoy no. Las integraciones con CRM (HubSpot, Zoho, otros) están planeadas. Por ahora, las transcripciones e información del cliente están disponibles en tu panel de Umbrella.",
+    faqQ7:"¿Puedo personalizar lo que dice la IA en las llamadas?",
+    faqA7:"Sí. Durante la configuración, ajustamos el saludo, las preguntas que hace la IA y cómo maneja los escenarios comunes para tu negocio. Los cambios entran en efecto inmediatamente.",
+    faqQ8:"¿Qué pasa fuera de horario o cuando estoy de vacaciones?",
+    faqA8:"La IA contesta 24/7 — misma voz, mismo filtro, misma toma de mensajes, sean las 2 PM o las 2 AM.",
+    faqQ9:"¿Puede cobrar información de pago o tomar pedidos?",
+    faqA9:"No — y por diseño. Leer números de tarjetas de crédito por una línea de IA plantea preocupaciones reales de seguridad y cumplimiento (PCI-DSS).",
+    faqQ10:"¿Y si quiero una función que no aparece aquí?",
+    faqA10:"Pregúntanos. Estamos moldeando activamente el producto según lo que los dueños de pequeños negocios realmente necesitan. Escribe a <a href=\"mailto:info@getumbrelladynamics.com\" style=\"color:var(--green);font-weight:600\">info@getumbrelladynamics.com</a> o llama a nuestra línea de demo.",
     footCopy:"© 2026 Umbrella Dynamics™ · Llamadas cubiertas.",
     footContact:"Contacto",
+    footFaq:"Preguntas",
     contactEyebrow:"Ponte en contacto",
     contactH2:"¿Preguntas antes de registrarte? Aquí estamos.",
     contactP:"Contáctanos de la forma que prefieras — el email llega a una bandeja real que revisamos todos los días, o escríbenos por WhatsApp para una charla rápida.",
@@ -1317,7 +1396,7 @@ const I18N = {
     navDemo:"Ouça ao vivo", navHow:"Como funciona", navPricing:"Preços", navCta:"Teste de 7 dias",
     heroEyebrow:"Triagem de chamadas com IA para pequenos negócios",
     heroH1:'Nunca mais perca um <em>cliente de verdade</em>.',
-    heroSub:"Seu agente Umbrella atende cada chamada na sua linha telefônica comercial, filtra spam e chamadas automáticas em segundos, e transfere clientes genuínos direto para você — sem número novo, sem app para seus clientes instalarem, apenas chamadas atendidas do jeito certo.",
+    heroSub:"Seu agente Umbrella atende cada chamada na sua linha telefônica comercial, filtra spam e chamadas automáticas em segundos, e captura os dados dos clientes genuínos para que nada importante escape — sem número novo, sem app para seus clientes instalarem.",
     ctaTrial:"Comece seu teste de 7 dias", ctaHear:"Ouça uma chamada real",
     trust1:"Sem número novo", trust2:"Configurado em 10 minutos", trust3:"Cancele quando quiser",
     tickerLabel:"Chamadas de hoje", tickerLive:"agente em serviço",
@@ -1338,8 +1417,8 @@ const I18N = {
     step1p:"Mantenha seu número atual. Um simples desvio envia as chamadas ao seu agente Umbrella — sem equipamentos novos, sem chip novo, sem apps para seus clientes aprenderem.",
     step2h:"O agente atende e filtra",
     step2p:"Cada chamada é atendida em dois toques, com uma voz natural e o nome do seu negócio. O agente pergunta o motivo, detecta robochamadas e vendas na hora, e verifica clientes reais.",
-    step3h:"Clientes reais chegam a você",
-    step3p:"Clientes genuínos são transferidos direto para seu telefone com um aviso pelo WhatsApp: quem ligou e por quê. Tudo mais vira um resumo que você lê quando quiser.",
+    step3h:"Clientes reais são bem atendidos",
+    step3p:"Clientes genuínos recebem uma saudação profissional, e o agente captura o nome, número de retorno e motivo da ligação. Cada conversa é transcrita por completo para você revisar — nada importante escapa.",
     beneEyebrow:"Por que os donos mudam",
     beneH2:"Seu telefone se acalma.<br>Seu negócio cresce.",
     bene1stat:"chamadas de spam", bene1h:"O spam para na porta",
@@ -1347,7 +1426,7 @@ const I18N = {
     bene2stat:"Horas de volta para você", bene2h:"Você recupera seu tempo",
     bene2p:"Pare de largar as ferramentas, sair de um serviço ou interromper uma reunião por uma chamada sem valor. Só passam as chamadas que importam.",
     bene3h:"Nenhum cliente perdido",
-    bene3p:"Ocupado, fora do expediente ou em outra linha? O agente coleta os dados, agenda o retorno e envia um resumo — um toque perdido nunca mais será um trabalho perdido.",
+    bene3p:"Ocupado, fora do expediente ou em outra linha? O agente coleta os dados, captura o número de retorno e salva uma transcrição completa — um toque perdido nunca mais será um trabalho perdido.",
     quoteEyebrow:"Para quem é a Umbrella", quoteH2:"Os donos de pequenos negócios para quem construímos isto.",
     who1title:"Encanadores e contratantes de serviços domésticos", who1sub:"Operadores solo, em serviço o dia todo",
     who1desc:"Debaixo de uma pia ou em uma escada metade do dia. Cada toque pode ser uma emergência real — ou mais um golpe de garantia. Precisa que o telefone só toque quando realmente importa.",
@@ -1356,18 +1435,18 @@ const I18N = {
     who3title:"Educadores, coaches e consultores solo", who3sub:"Negócios de uma só pessoa",
     who3desc:"Sem equipe para atender o telefone. Precisa de uma voz profissional que cumprimenta, filtra e captura clientes sérios para retorno enquanto aulas ou sessões acontecem.",
     priceEyebrow:"Preços simples", priceH2:"Menos do que custa um trabalho perdido.",
-    priceSub:"Todos os planos começam com um teste de serviço de 7 dias — a cobrança mensal começa no dia 8. Uma configuração única de $99 é cobrada na inscrição.",
+    priceSub:"Todos os planos começam com um teste de 7 dias — a cobrança mensal começa no dia 8. Cancele quando quiser antes, sem cobrança.",
     plan1h:"Inicial", plan1for:"Para um dono, uma linha", perMonth1:"/mês", perMonth2:"/mês", perMonth3:"/mês",
     p1f1:"~300 minutos de chamadas incluídos", p1f2:"Atendimento, triagem e bloqueio de spam 24/7",
-    p1f3:"Resumos e alertas pelo WhatsApp", p1f4:"Mantém seu número atual",
+    p1f3:"Transcrições completas no seu painel", p1f4:"Mantém seu número atual",
     planCta1:"Teste de 7 dias", planCta2:"Teste de 7 dias", planCta3:"Teste de 7 dias",
     hotTag:"Mais popular", plan2h:"Crescimento", plan2for:"Para negócios e equipes movimentados",
     p2f1:"~600 minutos de chamadas incluídos", p2f2:"Agente bilíngue — detecta inglês e espanhol automaticamente",
-    p2f3:"Saudação, perguntas e regras de chamada personalizadas", p2f4:"Transferência para até 5 membros da equipe", p2f5:"Ajuste pessoal durante seu teste",
+    p2f3:"Saudação, perguntas e regras de chamada personalizadas", p2f4:"Roteamento para múltiplos membros da equipe (em breve)", p2f5:"Ajuste pessoal durante seu teste",
     plan3h:"Premium", plan3for:"Para cobertura máxima",
     p3f1:"Tudo do Crescimento, maior volume", p3f2:"Base de conhecimento: o agente responde do seu cardápio, lista de preços e FAQ",
     p3f3:"Mudanças prioritárias no mesmo dia", p3f4:"Chamada mensal de desempenho e ajustes",
-    setupNote:"Sua configuração de $99 é um entregável, não uma taxa: agente construído, WhatsApp conectado, saudação ajustada — tudo feito para você em 48 horas.",
+    setupNote:"Todos os planos incluem teste de 7 dias. Sem cobrança até o dia 8. Cancele quando quiser antes, sem perguntas.",
     affEyebrow:"Programa de parceiros", affH2:"Conhece donos de negócios? Ganhe todo mês que eles ficarem.",
     affSub:"Ganhe uma <b>comissão recorrente de 20%</b> por cada negócio que indicar, paga mensalmente durante seus primeiros <b>12 meses</b>. Candidate-se abaixo — parceiros aprovados recebem seu link pessoal por email.",
     affName:"Seu nome", affEmail:"Endereço de email", affCta:"Solicitar convite",
@@ -1376,9 +1455,31 @@ const I18N = {
     closerH2:"A próxima chamada pode ser seu melhor cliente. Atenda sempre.",
     closerP:"Configure hoje à noite em dez minutos. Amanhã de manhã, o spam terá sumido e cada cliente real chegará até você.",
     closerCta:"Comece seu teste de 7 dias",
-    closerFine:"Teste de serviço de 7 dias · Configuração única de $99 · Cancele quando quiser",
+    closerFine:"Teste de 7 dias · Sem taxa de configuração · Cancele quando quiser",
+    faqEyebrow:"Perguntas comuns", faqH2:"O que a Umbrella faz hoje — e o que vem depois.",
+    faqQ1:"O agente atende chamadas no idioma do meu cliente?",
+    faqA1:"Sim. Lisa, nossa agente IA, lida com inglês, espanhol e português nativamente — detecta o idioma de quem liga e responde no mesmo. Isso funciona hoje, em cada chamada.",
+    faqQ2:"Ela transfere chamadas para meu telefone pessoal em tempo real?",
+    faqA2:"Ainda não — está no nosso roteiro. Hoje, a IA anota um recado: nome de quem ligou, número de retorno e motivo. Você receberá uma transcrição completa.",
+    faqQ3:"Vou receber um resumo por texto de cada chamada?",
+    faqA3:"Resumos automáticos por SMS ou WhatsApp chegam em breve. Hoje, cada chamada é transcrita por completo e armazenada no seu painel.",
+    faqQ4:"Ela pode fazer chamadas de saída para dar seguimento a leads?",
+    faqA4:"Não na versão atual. Umbrella hoje lida com chamadas de entrada — atendendo, filtrando spam e capturando recados.",
+    faqQ5:"Ela pode marcar compromissos no meu calendário?",
+    faqA5:"A integração com calendários (Google Calendar, Calendly, outros) está no roteiro. Por enquanto, quando alguém quer agendar, a IA captura o horário preferido e informações de contato.",
+    faqQ6:"Ela se integra ao meu CRM?",
+    faqA6:"Hoje não. Integrações com CRM (HubSpot, Zoho, outros) estão planejadas. Por enquanto, transcrições e dados dos que ligaram estão disponíveis no seu painel Umbrella.",
+    faqQ7:"Posso personalizar o que a IA diz nas chamadas?",
+    faqA7:"Sim. Durante a configuração, ajustamos a saudação, as perguntas que a IA faz e como ela lida com cenários comuns do seu negócio. Mudanças entram em efeito imediatamente.",
+    faqQ8:"O que acontece fora do horário ou quando estou de férias?",
+    faqA8:"A IA atende 24/7 — mesma voz, mesma triagem, mesma anotação de recados, seja 14h ou 2h da manhã.",
+    faqQ9:"Ela pode coletar informações de pagamento ou receber pedidos?",
+    faqA9:"Não — e é por design. Ler números de cartão de crédito por linha de IA levanta preocupações reais de segurança e conformidade (PCI-DSS).",
+    faqQ10:"E se eu quiser um recurso que não está listado aqui?",
+    faqA10:"Pergunte. Estamos moldando o produto ativamente baseado no que donos de pequenos negócios realmente precisam. Envie email para <a href=\"mailto:info@getumbrelladynamics.com\" style=\"color:var(--green);font-weight:600\">info@getumbrelladynamics.com</a> ou ligue para nossa linha de demo.",
     footCopy:"© 2026 Umbrella Dynamics™ · Chamadas cobertas.",
     footContact:"Contato",
+    footFaq:"FAQ",
     contactEyebrow:"Entre em contato",
     contactH2:"Dúvidas antes de se cadastrar? Estamos aqui.",
     contactP:"Fale conosco da forma que preferir — o email chega a uma caixa real que verificamos todos os dias, ou nos mande uma mensagem no WhatsApp para um bate-papo rápido.",
