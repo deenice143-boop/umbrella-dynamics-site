@@ -315,10 +315,9 @@ function render(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const v = I18N[lang][el.dataset.i18n]; if(v!==undefined) el.innerHTML=v;
   });
-  const currency = new URLSearchParams(location.search).get('cur')
-                || (typeof localStorage!=='undefined' && localStorage.getItem('ud_currency'))
-                || 'USD';
-  currentCurrency = currency;
+  // Display the currently selected currency (source of truth: currentCurrency,
+  // set once on load from the ?cur= link param — see init below).
+  const currency = currentCurrency;
   const picker = document.getElementById('currencyPicker');
   if (picker) picker.value = currency;
   const P = CONFIG.pricing[currency] || CONFIG.pricing.USD;
@@ -378,6 +377,12 @@ if (planParam && ['starter','growth','premium'].includes(planParam)) {
     t.classList.toggle('active', t.dataset.plan === planParam);
   });
 }
+
+/* Resolve initial currency ONCE from the ?cur= link param (validated against
+   known currencies); default to USD. No stale localStorage read, so checkout
+   can't get stuck on a previously-tested currency, and there's no load flash. */
+const curParam = new URLSearchParams(location.search).get('cur');
+currentCurrency = (curParam && CONFIG.pricing[curParam]) ? curParam : 'USD';
 
 render();
 </script>
