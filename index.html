@@ -178,20 +178,13 @@
     height:38px;border-radius:999px;border:none;
     background:linear-gradient(135deg,var(--teal) 0%,var(--green) 100%);
     color:#fff;cursor:pointer;
-    padding:0 28px 0 34px;font-family:var(--body);font-size:.85rem;font-weight:600;
+    padding:0 26px 0 15px;font-family:var(--body);font-size:.9rem;font-weight:600;
     box-shadow:0 4px 14px rgba(11,92,77,.35);
     transition:box-shadow .15s;
   }
   .lang-select option{background:var(--surface);color:var(--ink)}
   .lang-select:hover{box-shadow:0 6px 18px rgba(11,92,77,.5)}
   .lang-select:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
-  .lang-wrap::before{
-    content:"";position:absolute;left:12px;top:50%;transform:translateY(-50%);
-    width:16px;height:16px;pointer-events:none;
-    background:currentColor;color:#fff;
-    -webkit-mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>') center/contain no-repeat;
-    mask:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>') center/contain no-repeat;
-  }
   .lang-wrap::after{
     content:"";position:absolute;right:11px;top:50%;transform:translateY(-40%) rotate(45deg);
     width:7px;height:7px;border-right:1.5px solid #fff;border-bottom:1.5px solid #fff;
@@ -566,6 +559,19 @@
     margin-top:14px;font-size:.85rem;color:var(--ink-soft);
     position:relative;z-index:1;
   }
+  .try-live-widget{
+    position:relative;z-index:1;
+    margin:18px auto 0;max-width:440px;
+    display:flex;align-items:flex-start;gap:10px;
+    padding:13px 18px;border-radius:16px;
+    background:rgba(33,192,99,.10);
+    border:1px solid rgba(33,192,99,.32);
+    font-size:.9rem;line-height:1.5;color:var(--ink);text-align:left;
+  }
+  [data-theme="dark"] .try-live-widget{background:rgba(33,192,99,.13);border-color:rgba(33,192,99,.4)}
+  .try-live-widget svg{flex:none;margin-top:2px}
+  .try-live-widget b{color:var(--green-dark)}
+  [data-theme="dark"] .try-live-widget b{color:#6fd9a4}
 
   /* --- two-phone call-flow animation --- */
   .call-flow{
@@ -671,6 +677,8 @@
     text-align:left;min-width:260px;
   }
   .contact-btn:hover{border-color:var(--green);background:rgba(33,192,99,.06)}
+  .contact-btn.contact-lisa{cursor:pointer;border-color:rgba(33,192,99,.5);background:rgba(33,192,99,.08)}
+  .contact-btn.contact-lisa:hover{border-color:var(--green);background:rgba(33,192,99,.14)}
   .contact-btn b{font-size:.98rem}
   .contact-btn small{color:var(--ink-soft);font-size:.82rem}
   .contact-ico{
@@ -733,9 +741,9 @@
     <div class="nav-tools">
       <span class="lang-wrap">
         <select class="lang-select" id="langSelect" aria-label="Language">
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="pt">PT</option>
+          <option value="en">🇺🇸 EN</option>
+          <option value="es">🇪🇸 ES</option>
+          <option value="pt">🇧🇷 PT</option>
         </select>
       </span>
       <button class="tool-btn" id="themeBtn" aria-label="Toggle light and dark theme">
@@ -889,6 +897,10 @@
         <span>+1 (646) 540-9169</span>
       </a>
       <p class="try-live-fine" data-i18n="tryLiveFine">Free to call · Standard rates from your carrier · Available 24/7</p>
+      <div class="try-live-widget">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" stroke="#21c063" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="tryLiveWidget">Calling from outside the US? Skip the international call — tap the <b>green chat bubble</b> in the corner to talk to Lisa live, right in your browser.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1086,6 +1098,13 @@
         <p data-i18n="contactP">Reach us the way that works best for you — email lands in a real inbox we check every day, or WhatsApp us for a quick chat.</p>
       </div>
       <div class="contact-actions">
+        <a href="#" onclick="openLisa();return false;" class="contact-btn contact-lisa">
+          <span class="contact-ico">💬</span>
+          <span>
+            <b data-i18n="contactLisaLbl">Talk to Lisa now</b><br>
+            <small data-i18n="contactLisaSub">Live AI agent · right in your browser</small>
+          </span>
+        </a>
         <a href="tel:+16465409169" class="contact-btn contact-phone">
           <span class="contact-ico">📞</span>
           <span>
@@ -1203,12 +1222,12 @@ const I18N = {
     bene3h:"Every lead captured",
     bene3p:"Busy, off the clock, or on another line? The agent takes the details, captures the callback number, and saves a full transcript — so a missed ring is never a missed job.",
     quoteEyebrow:"Who Umbrella is for", quoteH2:"The small business owners we built this for.",
-    who1title:"Plomeros y contratistas de servicios en casa", who1sub:"Operadores independientes, en trabajos todo el día",
-    who1desc:"Bajo un fregadero o en una escalera medio día. Cada llamada podría ser una emergencia real — o una estafa de garantía más. Necesita que el teléfono solo suene cuando realmente importe.",
-    who2title:"Paisajismo y servicios con equipos", who2sub:"Dueños de negocios que dirigen equipos",
-    who2desc:"Recibir ocho o nueve llamadas spam al día rompe la concentración y quema tiempo. Quiere que el spam se detenga en la puerta — sin ser grosero con personas reales que marcaron mal.",
-    who3title:"Educadores, coaches y consultores independientes", who3sub:"Negocios de una sola persona",
-    who3desc:"Sin personal para contestar el teléfono. Necesita una voz profesional que salude, filtre y capture clientes serios para devolver la llamada mientras corren las clases o sesiones.",
+    who1title:"Plumbing & home service contractors", who1sub:"Solo operators, on jobs all day",
+    who1desc:"Under a sink or on a ladder half the day. Every ring could be a real emergency — or another warranty scam. Needs the phone to only ring when it actually matters.",
+    who2title:"Landscape & multi-crew services", who2sub:"Business owners managing teams",
+    who2desc:"Fielding eight or nine spam calls a day breaks focus and burns time. Wants junk stopped at the door — without being rude to real people who dial the wrong number.",
+    who3title:"Solo educators, coaches & consultants", who3sub:"One-person businesses",
+    who3desc:"No staff to answer the phone. Needs a professional voice that greets, screens, and captures serious leads for callback while classes or client sessions run.",
     priceEyebrow:"Simple pricing", priceH2:"Less than one missed job costs you.",
     priceSub:"Every plan starts with a 7-day trial — monthly billing begins on day 8. Cancel anytime before then, no charge.",
     plan1h:"Starter", plan1for:"For one owner, one line", perMonth1:"/month", perMonth2:"/month", perMonth3:"/month",
@@ -1258,6 +1277,8 @@ const I18N = {
     contactEyebrow:"Get in touch",
     contactH2:"Questions before you sign up? We're here.",
     contactP:"Reach us the way that works best for you — email lands in a real inbox we check every day, or WhatsApp us for a quick chat.",
+    contactLisaLbl:"Talk to Lisa now",
+    contactLisaSub:"Live AI agent · right in your browser",
     contactPhoneLbl:"Call live demo",
     contactPhoneSub:"+1 (646) 540-9169 · Talk to the agent",
     contactEmailLbl:"Email",
@@ -1267,6 +1288,7 @@ const I18N = {
     tryLiveH2:"Hear the agent yourself. Right now.",
     tryLiveSub:"Call this number and have a real conversation with our AI receptionist. She answers in English, Spanish, or Portuguese — the same agent your customers would hear.",
     tryLiveFine:"Free to call · Standard rates from your carrier · Available 24/7",
+    tryLiveWidget:"Calling from outside the US? Skip the international call — tap the <b>green chat bubble</b> in the corner to talk to Lisa live, right in your browser.",
     callFlowCust:"Customer calls",
     callFlowYou:"You get the call",
     footDemo:"Demo", footHow:"How it works", footPricing:"Pricing", footPrivacy:"Privacy", footTerms:"Terms",
@@ -1316,12 +1338,12 @@ const I18N = {
     bene3h:"Ningún cliente perdido",
     bene3p:"¿Ocupado, fuera de horario o en otra línea? El agente toma los datos, captura el número para devolver la llamada y guarda una transcripción completa — un timbre perdido nunca más será un trabajo perdido.",
     quoteEyebrow:"Para quién es Umbrella", quoteH2:"Los dueños de pequeños negocios para quienes lo construimos.",
-    who1title:"Plumbing & home service contractors", who1sub:"Solo operators, on jobs all day",
-    who1desc:"Under a sink or on a ladder half the day. Every ring could be a real emergency — or another warranty scam. Needs the phone to only ring when it actually matters.",
-    who2title:"Landscape & multi-crew services", who2sub:"Business owners managing teams",
-    who2desc:"Fielding eight or nine spam calls a day breaks focus and burns time. Wants junk stopped at the door — without being rude to real people who dial the wrong number.",
-    who3title:"Solo educators, coaches & consultants", who3sub:"One-person businesses",
-    who3desc:"No staff to answer the phone. Needs a professional voice that greets, screens, and captures serious leads for callback while classes or client sessions run.",
+    who1title:"Plomeros y contratistas de servicios en casa", who1sub:"Operadores independientes, en trabajos todo el día",
+    who1desc:"Bajo un fregadero o en una escalera medio día. Cada llamada podría ser una emergencia real — o una estafa de garantía más. Necesita que el teléfono solo suene cuando realmente importe.",
+    who2title:"Paisajismo y servicios con equipos", who2sub:"Dueños de negocios que dirigen equipos",
+    who2desc:"Recibir ocho o nueve llamadas spam al día rompe la concentración y quema tiempo. Quiere que el spam se detenga en la puerta — sin ser grosero con personas reales que marcaron mal.",
+    who3title:"Educadores, coaches y consultores independientes", who3sub:"Negocios de una sola persona",
+    who3desc:"Sin personal para contestar el teléfono. Necesita una voz profesional que salude, filtre y capture clientes serios para devolver la llamada mientras corren las clases o sesiones.",
     priceEyebrow:"Precios simples", priceH2:"Menos de lo que te cuesta un trabajo perdido.",
     priceSub:"Todos los planes comienzan con una prueba de 7 días — la facturación mensual comienza el día 8. Cancela cuando quieras antes, sin cargo.",
     plan1h:"Inicial", plan1for:"Para un dueño, una línea", perMonth1:"/mes", perMonth2:"/mes", perMonth3:"/mes",
@@ -1371,6 +1393,8 @@ const I18N = {
     contactEyebrow:"Ponte en contacto",
     contactH2:"¿Preguntas antes de registrarte? Aquí estamos.",
     contactP:"Contáctanos de la forma que prefieras — el email llega a una bandeja real que revisamos todos los días, o escríbenos por WhatsApp para una charla rápida.",
+    contactLisaLbl:"Habla con Lisa ahora",
+    contactLisaSub:"Agente IA en vivo · desde tu navegador",
     contactPhoneLbl:"Llama al demo",
     contactPhoneSub:"+1 (646) 540-9169 · Habla con el agente",
     contactEmailLbl:"Email",
@@ -1380,6 +1404,7 @@ const I18N = {
     tryLiveH2:"Escucha al agente tú mismo. Ahora.",
     tryLiveSub:"Llama a este número y ten una conversación real con nuestra recepcionista IA. Ella responde en inglés, español o portugués — el mismo agente que escucharían tus clientes.",
     tryLiveFine:"Llamada gratis · Tarifas estándar de tu operador · Disponible 24/7",
+    tryLiveWidget:"¿Llamas desde fuera de EE. UU.? Evita la llamada internacional — toca la <b>burbuja verde de chat</b> en la esquina para hablar con Lisa en vivo, desde tu navegador.",
     callFlowCust:"Llama el cliente",
     callFlowYou:"Tú recibes la llamada",
     footDemo:"Demo", footHow:"Cómo funciona", footPricing:"Precios", footPrivacy:"Privacidad", footTerms:"Términos",
@@ -1483,6 +1508,8 @@ const I18N = {
     contactEyebrow:"Entre em contato",
     contactH2:"Dúvidas antes de se cadastrar? Estamos aqui.",
     contactP:"Fale conosco da forma que preferir — o email chega a uma caixa real que verificamos todos os dias, ou nos mande uma mensagem no WhatsApp para um bate-papo rápido.",
+    contactLisaLbl:"Fale com a Lisa agora",
+    contactLisaSub:"Agente IA ao vivo · direto no navegador",
     contactPhoneLbl:"Ligue para o demo",
     contactPhoneSub:"+1 (646) 540-9169 · Fale com o agente",
     contactEmailLbl:"Email",
@@ -1492,6 +1519,7 @@ const I18N = {
     tryLiveH2:"Ouça o agente você mesmo. Agora.",
     tryLiveSub:"Ligue para este número e tenha uma conversa real com nossa recepcionista IA. Ela atende em inglês, espanhol ou português — o mesmo agente que seus clientes ouviriam.",
     tryLiveFine:"Ligação gratuita · Taxas padrão da sua operadora · Disponível 24/7",
+    tryLiveWidget:"Ligando de fora dos EUA? Evite a ligação internacional — toque na <b>bolha verde de chat</b> no canto para falar com a Lisa ao vivo, direto no seu navegador.",
     callFlowCust:"Cliente liga",
     callFlowYou:"Você recebe a chamada",
     footDemo:"Demo", footHow:"Como funciona", footPricing:"Preços", footPrivacy:"Privacidade", footTerms:"Termos",
@@ -1595,6 +1623,21 @@ function setLang(l){
   stopDemo(true); // reset demo with translated placeholder + status
 }
 langSelect.addEventListener('change', e => setLang(e.target.value));
+
+/* Talk-to-Lisa: bring the ElevenLabs voice widget into view and best-effort open it.
+   The floating bubble is always available as the reliable fallback. */
+function openLisa(){
+  try{
+    var w = document.querySelector('elevenlabs-convai');
+    if(!w) return;
+    w.scrollIntoView({ behavior:'smooth', block:'end' });
+    var sr = w.shadowRoot;
+    if(sr){
+      var launcher = sr.querySelector('button, [role="button"]');
+      if(launcher){ launcher.click(); }
+    }
+  }catch(e){ /* no-op — the always-visible bubble is the fallback */ }
+}
 
 /* ================= WAVEFORM ================= */
 document.querySelectorAll('.agent-logo').forEach(i => i.src = document.getElementById('brandLogo').src);
