@@ -1,0 +1,172 @@
+<!--
+====================================================================
+  UMBRELLA DYNAMICS — TRUST STRIP + FOUNDER NOTE
+  Reference sheet. DO NOT upload this file to GitHub.
+  It is a cheat-sheet: copy each PIECE into your existing index.html
+  at the spot described, then commit index.html.
+  Nothing here touches the bottom of your file, so the Lisa widget
+  button is not affected.
+====================================================================
+
+  WHAT GOES WHERE (5 pastes total):
+    PIECE 1 -> the visible trust section. Paste ABOVE the line
+               <section class="pricing" id="pricing">
+    PIECE 2 -> paste right AFTER the line  en: {
+    PIECE 3 -> paste right AFTER the line  es: {
+    PIECE 4 -> paste right AFTER the line  pt: {
+    PIECE 5 -> the founder note. Paste ABOVE the line
+               <section id="contact" class="contact-band">
+               (its 3 translation lines are included inside PIECES 2/3/4,
+                already there — no extra dictionary paste needed.)
+====================================================================
+-->
+
+
+<!-- ================================================================
+     PIECE 1  —  paste ABOVE  <section class="pricing" id="pricing">
+================================================================= -->
+<!-- ============ TRUST STRIP ============ -->
+<style>
+  .trust-band{padding:80px 0;background:var(--cloud);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust-head{text-align:center;max-width:640px;margin:0 auto 44px}
+  .trust-head .eyebrow{justify-content:center}
+  .trust-sub{color:var(--ink-soft);font-size:1.02rem;margin-top:12px}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:900px){.trust-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.trust-grid{grid-template-columns:1fr}}
+  .trust-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px;transition:transform .2s,box-shadow .2s}
+  .trust-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(6,63,53,.1)}
+  [data-theme="dark"] .trust-card:hover{box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .trust-ico{width:46px;height:46px;border-radius:13px;background:rgba(33,192,99,.13);display:grid;place-items:center;color:var(--green);margin-bottom:18px}
+  .trust-card h3{font-family:var(--disp);font-size:1.08rem;font-weight:700;margin-bottom:9px;color:var(--ink)}
+  .trust-card p{color:var(--ink-soft);font-size:.92rem;line-height:1.55}
+</style>
+<section class="trust-band" id="trust">
+  <div class="wrap">
+    <div class="trust-head rev">
+      <span class="eyebrow" data-i18n="trustEyebrow">Why owners trust us</span>
+      <h2 data-i18n="trustH2">Built to earn your trust, not assume it.</h2>
+      <p class="trust-sub" data-i18n="trustSub">We're new — and we act like it. Honest about what Lisa does today, and personal about how we treat you.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card rev">
+        <div class="trust-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3 data-i18n="trust1title">7-day free trial</h3>
+        <p data-i18n="trust1desc">No charge until day 8. No setup fee, no contract — cancel anytime before then.</p>
+      </div>
+      <div class="trust-card rev">
+        <div class="trust-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.9"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="trust2title">A real person, not a call center</h3>
+        <p data-i18n="trust2desc">Your agent is set up and tuned with you during the trial. Email us and a real person answers — no runaround.</p>
+      </div>
+      <div class="trust-card rev">
+        <div class="trust-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.9"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="trust3title">Your data stays yours</h3>
+        <p data-i18n="trust3desc">Transcripts live in your own dashboard. We never sell your data, and by design Lisa never takes card numbers over the phone.</p>
+      </div>
+      <div class="trust-card rev">
+        <div class="trust-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" stroke="currentColor" stroke-width="1.9"/></svg></div>
+        <h3 data-i18n="trust4title">English, Spanish &amp; Portuguese</h3>
+        <p data-i18n="trust4desc">One agent understands all three, detecting each caller's language automatically — built for how your customers really call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ END TRUST STRIP ============ -->
+
+
+<!-- ================================================================
+     PIECE 2  —  paste right AFTER the line   en: {
+     (includes BOTH trust strip AND founder note strings)
+================================================================= -->
+<!--
+    trustEyebrow:"Why owners trust us",
+    trustH2:"Built to earn your trust, not assume it.",
+    trustSub:"We're new — and we act like it. Honest about what Lisa does today, and personal about how we treat you.",
+    trust1title:"7-day free trial",
+    trust1desc:"No charge until day 8. No setup fee, no contract — cancel anytime before then.",
+    trust2title:"A real person, not a call center",
+    trust2desc:"Your agent is set up and tuned with you during the trial. Email us and a real person answers — no runaround.",
+    trust3title:"Your data stays yours",
+    trust3desc:"Transcripts live in your own dashboard. We never sell your data, and by design Lisa never takes card numbers over the phone.",
+    trust4title:"English, Spanish & Portuguese",
+    trust4desc:"One agent understands all three, detecting each caller's language automatically — built for how your customers really call.",
+    founderEyebrow:"From the founder",
+    founderQuote:"I started Umbrella Dynamics because small business owners lose real customers to missed calls and drown in spam — and the tools built to help were made for big companies with big budgets. Lisa is my answer: an honest, affordable agent that treats your phone like it matters. I'm building this one customer at a time, and when you email us, you're reaching me.",
+    founderName:"Founder, Umbrella Dynamics",
+-->
+
+
+<!-- ================================================================
+     PIECE 3  —  paste right AFTER the line   es: {
+================================================================= -->
+<!--
+    trustEyebrow:"Por qué los dueños confían en nosotros",
+    trustH2:"Hechos para ganarnos tu confianza, no darla por hecha.",
+    trustSub:"Somos nuevos — y actuamos como tal. Honestos sobre lo que Lisa hace hoy, y cercanos en cómo te tratamos.",
+    trust1title:"Prueba gratis de 7 días",
+    trust1desc:"Sin cargo hasta el día 8. Sin costo de configuración, sin contrato — cancela cuando quieras antes.",
+    trust2title:"Una persona real, no un call center",
+    trust2desc:"Configuramos y ajustamos tu agente contigo durante la prueba. Escríbenos y te responde una persona real — sin vueltas.",
+    trust3title:"Tus datos siguen siendo tuyos",
+    trust3desc:"Las transcripciones viven en tu propio panel. Nunca vendemos tus datos, y por diseño Lisa nunca toma números de tarjeta por teléfono.",
+    trust4title:"Inglés, español y portugués",
+    trust4desc:"Un solo agente entiende los tres, detectando el idioma de cada persona automáticamente — hecho para cómo llaman tus clientes.",
+    founderEyebrow:"Del fundador",
+    founderQuote:"Empecé Umbrella Dynamics porque los dueños de pequeños negocios pierden clientes reales por llamadas no contestadas y se ahogan en spam — y las herramientas hechas para ayudar eran para grandes empresas con grandes presupuestos. Lisa es mi respuesta: un agente honesto y accesible que trata tu teléfono como algo que importa. Lo construyo un cliente a la vez, y cuando nos escribes, me llegas a mí.",
+    founderName:"Fundador, Umbrella Dynamics",
+-->
+
+
+<!-- ================================================================
+     PIECE 4  —  paste right AFTER the line   pt: {
+================================================================= -->
+<!--
+    trustEyebrow:"Por que os donos confiam na gente",
+    trustH2:"Feitos para conquistar sua confiança, não presumi-la.",
+    trustSub:"Somos novos — e agimos como tal. Honestos sobre o que a Lisa faz hoje, e próximos no jeito que tratamos você.",
+    trust1title:"Teste grátis de 7 dias",
+    trust1desc:"Sem cobrança até o dia 8. Sem taxa de configuração, sem contrato — cancele quando quiser antes.",
+    trust2title:"Uma pessoa real, não um call center",
+    trust2desc:"Configuramos e ajustamos seu agente com você durante o teste. Mande um email e uma pessoa real responde — sem enrolação.",
+    trust3title:"Seus dados continuam seus",
+    trust3desc:"As transcrições ficam no seu próprio painel. Nunca vendemos seus dados, e por design a Lisa nunca recebe números de cartão por telefone.",
+    trust4title:"Inglês, espanhol e português",
+    trust4desc:"Um único agente entende os três, detectando o idioma de cada pessoa automaticamente — feito para como seus clientes realmente ligam.",
+    founderEyebrow:"Do fundador",
+    founderQuote:"Comecei a Umbrella Dynamics porque donos de pequenos negócios perdem clientes reais por chamadas não atendidas e se afogam em spam — e as ferramentas feitas para ajudar eram para grandes empresas com grandes orçamentos. A Lisa é minha resposta: um agente honesto e acessível que trata seu telefone como algo que importa. Construo isto um cliente de cada vez, e quando você nos escreve, é comigo que você fala.",
+    founderName:"Fundador, Umbrella Dynamics",
+-->
+
+
+<!-- ================================================================
+     PIECE 5  —  paste ABOVE  <section id="contact" class="contact-band">
+================================================================= -->
+<!-- ============ FOUNDER NOTE ============ -->
+<style>
+  .founder-band{padding:72px 0}
+  .founder-card{max-width:760px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:var(--radius);padding:38px 40px;box-shadow:var(--shadow-lg)}
+  @media(max-width:560px){.founder-card{padding:30px 26px}}
+  .founder-card .eyebrow{margin-bottom:18px}
+  .founder-quote{font-family:var(--disp);font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.5;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+  .founder-sign{margin-top:22px;display:flex;align-items:center;gap:13px}
+  .founder-avatar{width:46px;height:46px;border-radius:50%;flex:none;background:linear-gradient(135deg,var(--green),var(--teal));display:grid;place-items:center;color:#fff;font-family:var(--disp);font-weight:800;font-size:1.1rem}
+  .founder-sign b{display:block;font-size:.95rem;color:var(--ink)}
+  .founder-sign small{color:var(--ink-soft);font-size:.85rem}
+</style>
+<section class="founder-band" id="founder">
+  <div class="wrap">
+    <div class="founder-card rev">
+      <span class="eyebrow" data-i18n="founderEyebrow">From the founder</span>
+      <p class="founder-quote" data-i18n="founderQuote">I started Umbrella Dynamics because small business owners lose real customers to missed calls and drown in spam — and the tools built to help were made for big companies with big budgets. Lisa is my answer: an honest, affordable agent that treats your phone like it matters. I'm building this one customer at a time, and when you email us, you're reaching me.</p>
+      <div class="founder-sign">
+        <span class="founder-avatar" data-i18n="founderInitial">D</span>
+        <span>
+          <b data-i18n="founderNameLine">Derrick</b>
+          <small data-i18n="founderName">Founder, Umbrella Dynamics</small>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ END FOUNDER NOTE ============ -->
